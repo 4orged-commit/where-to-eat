@@ -50,7 +50,7 @@ fun BankLogo(bank: String, size: Dp = 20.dp) {
 
 /**
  * The restaurant's logo (already cut out of the bank's promo panel by the feed), shown whole on a white tile.
- * Without an image, a letter badge stands in.
+ * While it loads a shimmer shows; without an image (or if it fails), a letter badge stands in.
  */
 @Composable
 fun PlaceLogo(name: String, image: String?, size: Dp = 60.dp, modifier: Modifier = Modifier) {
@@ -80,7 +80,7 @@ fun PlaceLogo(name: String, image: String?, size: Dp = 60.dp, modifier: Modifier
         contentScale = ContentScale.Fit,
         modifier = modifier.size(size).clip(shape).background(Color.White)
             .border(1.dp, MaterialTheme.colorScheme.outlineVariant, shape), // keeps white tiles visible on ivory
-        loading = { letter(Modifier) },
+        loading = { Box(Modifier.size(size).clip(shape).shimmer()) },
         error = { letter(Modifier) },
     )
 }

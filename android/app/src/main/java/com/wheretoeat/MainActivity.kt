@@ -1,6 +1,8 @@
 package com.wheretoeat
 
 import android.os.Bundle
+import android.view.animation.DecelerateInterpolator
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
@@ -53,6 +55,13 @@ class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalSharedTransitionApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+        // The icon on its wine tile swells slightly and fades, revealing the list underneath.
+        installSplashScreen().setOnExitAnimationListener { splash ->
+            splash.iconView.animate().scaleX(1.35f).scaleY(1.35f).alpha(0f).setDuration(380)
+                .setInterpolator(DecelerateInterpolator()).start()
+            splash.view.animate().alpha(0f).setStartDelay(120).setDuration(320)
+                .withEndAction { splash.remove() }.start()
+        }
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {

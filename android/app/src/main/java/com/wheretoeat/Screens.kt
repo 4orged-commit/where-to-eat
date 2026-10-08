@@ -4,6 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.CreditCard
+import androidx.compose.material.icons.filled.Directions
+import androidx.compose.material.icons.filled.Event
+import androidx.compose.material.icons.filled.Payments
+import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.MediumTopAppBar
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
@@ -267,7 +279,11 @@ private fun FavoriteButton(on: Boolean, onClick: () -> Unit) {
             bounce.animateTo(1f, spring(dampingRatio = 0.35f, stiffness = 500f))
         }
     }
-    IconButton(onClick = onClick, modifier = Modifier.graphicsLayer { scaleX = bounce.value; scaleY = bounce.value }) {
+    val haptic = rememberHaptics()
+    IconButton(
+        onClick = { haptic(Haptic.Confirm); onClick() },
+        modifier = Modifier.graphicsLayer { scaleX = bounce.value; scaleY = bounce.value },
+    ) {
         if (on) Icon(Icons.Default.Star, "Remove from favorites", tint = amber())
         else Icon(Icons.Outlined.StarOutline, "Add to favorites", tint = MaterialTheme.colorScheme.onSurfaceVariant)
     }
@@ -298,60 +314,43 @@ fun HomeScreen(state: AppState) {
         delay(1200)
         state.listIntroDone = true
     }
+    val haptic = rememberHaptics()
+    // The big "Where to eat" header shrinks into a slim bar as the list scrolls up.
+    val collapse = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val actions: @Composable RowScope.() -> Unit = {
+        if (!searching) IconButton(onClick = { searching = true }) { Icon(Icons.Default.Search, "Search") }
+        if (state.refreshing) {
+            CircularProgressIndicator(Modifier.padding(horizontal = 13.dp).size(22.dp), strokeWidth = 2.5.dp)
+        } else {
+            IconButton(onClick = { haptic(Haptic.Tick); state.refresh() }) { Icon(Icons.Default.Refresh, "Refresh promos") }
+        }
+        IconButton(onClick = { state.go(Screen.Settings) }) { Icon(Icons.Default.Settings, "Settings") }
+    }
     Scaffold(
+        modifier = Modifier.nestedScroll(collapse.nestedScrollConnection),
         topBar = {
-            TopAppBar(
-                title = {
-                    if (searching) SearchField(state) { state.query = ""; searching = false }
-                    else Column {
-                        Text("Where to eat", style = MaterialTheme.typography.headlineSmall)
-                        Text(
-                            java.time.LocalDate.now().dayOfWeek.name.lowercase().replaceFirstChar { it.uppercase() } +
-                                " · ${places.size} place" + (if (places.size == 1) "" else "s") + " for your cards",
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                },
-                actions = {
-                    if (!searching) IconButton(onClick = { searching = true }) { Icon(Icons.Default.Search, "Search") }
-                    if (state.refreshing) {
-                        CircularProgressIndicator(Modifier.padding(horizontal = 13.dp).size(22.dp), strokeWidth = 2.5.dp)
-                    } else {
-                        IconButton(onClick = { state.refresh() }) { Icon(Icons.Default.Refresh, "Refresh promos") }
-                    }
-                    IconButton(onClick = { state.go(Screen.Settings) }) { Icon(Icons.Default.Settings, "Settings") }
-                },
-            )
-        },
-        floatingActionButton = {
-            if (places.isNotEmpty()) {
-                val spin = remember { Animatable(0f) }
-                val scope = rememberCoroutineScope()
-                ExtendedFloatingActionButton(
-                    onClick = {
-                        if (spin.isRunning) return@ExtendedFloatingActionButton
-                        val today = places.filter { worksToday(it.best.promo) }.ifEmpty { places }
-                        val pick = today.take(10).random()
-                        // Roll the dice, then open the pick.
-                        scope.launch {
-                            spin.snapTo(0f)
-                            spin.animateTo(720f, tween(600, easing = FastOutSlowInEasing))
-                            state.open(pick)
-                        }
-                    },
-                    icon = { Icon(Icons.Default.Casino, null, Modifier.graphicsLayer { rotationZ = spin.value }) },
-                    text = { Text("Surprise me") },
-                )
+            if (searching) {
+                TopAppBar(title = { SearchField(state) { state.query = ""; searching = false } }, actions = actions)
+            } else {
+                MediumTopAppBar(title = { Text("Where to eat") }, actions = actions, scrollBehavior = collapse)
             }
         },
     ) { pad ->
         PullToRefreshBox(
             isRefreshing = state.refreshing,
-            onRefresh = { state.refresh() },
+            onRefresh = { haptic(Haptic.Tick); state.refresh() },
             modifier = Modifier.fillMaxSize().padding(pad),
         ) {
-            LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 96.dp)) {
+            LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 32.dp)) {
+                item {
+                    Text(
+                        java.time.LocalDate.now().dayOfWeek.name.lowercase().replaceFirstChar { it.uppercase() } +
+                            " · ${places.size} place" + (if (places.size == 1) "" else "s") + " for your cards",
+                        Modifier.padding(start = 16.dp, end = 16.dp, bottom = 10.dp),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
                 item {
                     // One scrolling row of filters: location, favorites, then a chip per bank.
                     Row(
@@ -359,10 +358,10 @@ fun HomeScreen(state: AppState) {
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        AreaChip(areas, area) { state.chooseArea(it) }
+                        AreaChip(areas, area) { haptic(Haptic.Tick); state.chooseArea(it) }
                         FilterChip(
                             selected = state.favoritesOnly,
-                            onClick = { state.favoritesOnly = !state.favoritesOnly },
+                            onClick = { haptic(Haptic.Tick); state.favoritesOnly = !state.favoritesOnly },
                             label = { Text("Favorites") },
                             leadingIcon = {
                                 Icon(if (state.favoritesOnly) Icons.Default.Star else Icons.Outlined.StarOutline, null,
@@ -372,7 +371,7 @@ fun HomeScreen(state: AppState) {
                         if (banks.size > 1) banks.forEach { b ->
                             FilterChip(
                                 selected = b in bankFilter,
-                                onClick = { state.toggleBank(b) },
+                                onClick = { haptic(Haptic.Tick); state.toggleBank(b) },
                                 label = { Text(b) },
                                 leadingIcon = { BankLogo(b, 18.dp) },
                             )
@@ -611,20 +610,18 @@ fun DetailScreen(state: AppState) {
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
                     modifier = Modifier.fillMaxWidth().clickable { openMaps(ctx, b) },
                 ) {
-                    Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Row(Modifier.padding(start = 16.dp, top = 12.dp, bottom = 12.dp, end = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Default.Place, null, tint = MaterialTheme.colorScheme.primary)
                         Spacer(Modifier.width(12.dp))
-                        Column {
-                            Text(b.name.ifBlank { b.merchant }, fontWeight = FontWeight.SemiBold)
-                            if (b.address.isNotBlank()) Text(b.address, style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Column(Modifier.weight(1f)) {
+                            Text(b.name.ifBlank { b.merchant }, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold)
+                            if (b.address.isNotBlank() && !b.name.contains(b.address, true)) Text(b.address,
+                                style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
+                        // Directions straight from the branch, instead of a separate full-width button.
+                        FilledTonalIconButton(onClick = { openMaps(ctx, b) }) { Icon(Icons.Default.Directions, "Directions") }
                     }
-                }
-            }
-            item {
-                Button(onClick = { openMaps(ctx, branches.first()) }, modifier = Modifier.fillMaxWidth()) {
-                    Icon(Icons.Default.Place, null); Spacer(Modifier.width(6.dp)); Text("Open in Maps")
                 }
             }
             item {
@@ -639,34 +636,58 @@ fun DetailScreen(state: AppState) {
 @Composable
 private fun DealPanel(d: Deal, isNew: Boolean, onShare: () -> Unit, onPromoPage: () -> Unit) {
     val p = d.promo
+    val today = worksToday(p)
+    val muted = MaterialTheme.colorScheme.onSurfaceVariant
     Surface(shape = RoundedCornerShape(24.dp), color = MaterialTheme.colorScheme.surfaceContainerHigh) {
-        Column(Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Column(Modifier.fillMaxWidth().padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 CountUpLabel(discountLabel(p), Modifier.weight(1f))
+                if (isNew) { NewPill(); Spacer(Modifier.width(10.dp)) }
                 BankLogo(p.bank, 32.dp)
             }
-            Text(p.title, style = MaterialTheme.typography.titleMedium)
-            if (p.description.isNotBlank()) Text(p.description, style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant)
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                if (isNew) NewPill()
-                TodayPill(p)
-            }
-            TermsLine(p)
-            Text(
-                "Pay with your ${p.bank} " + d.myCards.joinToString(" or ") { cardName(p.bank, it) },
-                style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold,
+            Text(p.description.ifBlank { p.title }, style = MaterialTheme.typography.bodyLarge, color = muted)
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.6f))
+            // The key facts, each once: card, days, minimum spend, end date.
+            Fact(Icons.Default.CreditCard, "${p.bank} " + d.myCards.joinToString(" or ") { cardName(p.bank, it) })
+            val rule = dayRuleText(p)
+            Fact(
+                Icons.Default.CalendarMonth,
+                when {
+                    rule == null -> "Any day of the week"
+                    today -> "$rule · works today"
+                    else -> "$rule only · not today"
+                },
+                if (today) MaterialTheme.colorScheme.onSurface else muted,
             )
-            val dates = listOfNotNull(p.start?.let { "From ${it.format(dateFmt)}" }, p.end?.let { "until ${it.format(dateFmt)}" })
-            if (dates.isNotEmpty()) Text(dates.joinToString(" "), style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            minSpend(p)?.let { Fact(Icons.Default.Payments, "Minimum spend ₱${pesos.format(it)}") }
+            p.end?.let { end ->
+                val soon = endingSoon(p)
+                Fact(
+                    Icons.Default.Event,
+                    "Ends ${end.format(dateFmt)}" + if (soon) " · ${endsText(p)!!.lowercase()}" else "",
+                    if (soon) amber() else MaterialTheme.colorScheme.onSurface,
+                )
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                 FilledTonalButton(onClick = onShare) {
-                    Icon(Icons.Default.Share, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text("Share")
+                    Icon(Icons.Default.Share, null, Modifier.size(18.dp)); Spacer(Modifier.width(8.dp)); Text("Share")
                 }
-                if (p.url.isNotBlank()) OutlinedButton(onClick = onPromoPage) { Text("${p.bank} promo page") }
+                if (p.url.isNotBlank()) TextButton(onClick = onPromoPage) {
+                    Text("Full terms"); Spacer(Modifier.width(6.dp))
+                    Icon(Icons.AutoMirrored.Filled.OpenInNew, null, Modifier.size(16.dp))
+                }
             }
         }
+    }
+}
+
+/** One fact on a deal: an icon and a line of text. */
+@Composable
+private fun Fact(icon: androidx.compose.ui.graphics.vector.ImageVector, text: String, color: Color = MaterialTheme.colorScheme.onSurface) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(icon, null, Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
+        Spacer(Modifier.width(12.dp))
+        Text(text, style = MaterialTheme.typography.bodyMedium, color = color)
     }
 }
 
@@ -764,13 +785,14 @@ private fun ChoiceTile(
     onPick: (Offset) -> Unit,
 ) {
     var center by remember { mutableStateOf(Offset.Zero) }
+    val haptic = rememberHaptics()
     val bg by animateColorAsState(
         if (selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface, label = "tile-bg")
     val edge by animateColorAsState(
         if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant, label = "tile-edge")
     val lift by animateFloatAsState(if (selected) 1f else 0.96f, spring(dampingRatio = 0.5f), label = "tile-lift")
     Surface(
-        onClick = { if (!selected) onPick(center) },
+        onClick = { if (!selected) { haptic(Haptic.Confirm); onPick(center) } },
         shape = RoundedCornerShape(20.dp),
         color = bg,
         border = BorderStroke(if (selected) 2.dp else 1.dp, edge),

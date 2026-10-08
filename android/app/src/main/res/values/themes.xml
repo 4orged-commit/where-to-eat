@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.WhereToEat" parent="android:Theme.Material.NoActionBar">
+    <style name="Theme.WhereToEat" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowBackground">@color/bg</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">false</item>
     </style>
-    <color name="bg">#0F1512</color>
-    <color name="icon_bg">#1F6F4A</color>
+
+    <!-- Shown while the app starts: the gold icon on wine, then it eases away. -->
+    <style name="Theme.WhereToEat.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/icon_bg</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_fg</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/icon_bg</item>
+        <item name="postSplashScreenTheme">@style/Theme.WhereToEat</item>
+    </style>
+
+    <color name="bg">#FAF7F2</color>
+    <color name="icon_bg">#8C2F39</color>
 </resources>
