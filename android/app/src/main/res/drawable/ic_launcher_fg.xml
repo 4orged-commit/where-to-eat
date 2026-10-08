@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- plate -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,54m-20,0a20,20 0,1 1,40 0a20,20 0,1 1,-40 0" />
+    <path
+        android:fillColor="#1F6F4A"
+        android:pathData="M54,54m-13,0a13,13 0,1 1,26 0a13,13 0,1 1,-26 0" />
+    <!-- fork -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M27,32h2v10c0,1 1,2 2,2v-12h2v12c1,0 2,-1 2,-2v-10h2v11c0,2 -1.5,3.5 -3.5,3.9v22.1h-3v-22.1c-2,-0.4 -3.5,-1.9 -3.5,-3.9z" />
+    <!-- knife -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M79,32c-3,1 -5,5 -5,10c0,3 1,5 3,6v18h3z" />
+</vector>

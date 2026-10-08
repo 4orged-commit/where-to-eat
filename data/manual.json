@@ -1,0 +1,29 @@
+{
+  "_note": "Hand-checked snapshots for banks that block automated reading. Only promos whose dates were seen to be running are listed. Update 'checked' whenever the banks are re-checked.",
+  "banks": {
+    "BDO": { "checked": "2026-10-08T20:00:00+08:00" },
+    "UnionBank": { "checked": "2026-10-08T20:00:00+08:00" }
+  },
+  "promos": [
+    {
+      "id": "bdo:mortons-2026-10",
+      "bank": "BDO",
+      "title": "40% OFF at Morton's The Steakhouse",
+      "description": "Fridays and Saturdays, holidays included. Minimum dine-in bill of PHP 10,000 (excluding service charge); discount capped at PHP 5,000. Valid with BDO Elite credit cards.",
+      "cards": ["BDO Elite"],
+      "start": "2026-09-18T00:00:00+08:00",
+      "end": "2026-10-31T23:59:59+08:00",
+      "url": "https://www.bdo.com.ph/personal/cards/credit-and-debit-card-promos/omnibus/mortons",
+      "branches": [
+        {
+          "merchant": "Morton's The Steakhouse",
+          "name": "Morton's The Steakhouse, Uptown Eastgate",
+          "address": "11th Avenue corner 36th Street, Uptown Eastgate, Fort Bonifacio, Taguig City",
+          "area": "BGC",
+          "lat": null,
+          "lon": null
+        }
+      ]
+    }
+  ]
+}

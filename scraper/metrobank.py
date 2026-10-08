@@ -36,6 +36,25 @@ def area_of(branch, geo):
     return None
 
 
+def _compact(s):
+    return re.sub(r"[^a-z0-9]", "", (s or "").lower())
+
+
+def _tokens(s):
+    return {t for t in re.findall(r"[a-z0-9]+", (s or "").lower()) if len(t) >= 4}
+
+
+def _matches(label, title):
+    """True when a merchant/branch label plausibly names the same place as the promo title."""
+    c = _compact(label)
+    return bool(c) and (c in _compact(title) or bool(_tokens(label) & _tokens(title)))
+
+
+def name_from_title(title):
+    """'50% OFF at Domino's Pizza' -> "Domino's Pizza". Used when Metrobank's merchant label is wrong."""
+    return re.split(r"\b(?:at|OFF|on)\b\s*", title, flags=re.I)[-1].strip(" -–") or title
+
+
 def fetch():
     html = requests.get(PAGE, headers={"User-Agent": UA}, timeout=90).text
     m = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', html, re.S)
@@ -63,8 +82,17 @@ def run():
             g = geo.get(br["id"])
             area = area_of(br, g)
             if area:
+                merchant = (br.get("merchant") or {}).get("name")
+                if not (_matches(merchant, p["title"]) or _matches(br.get("name"), p["title"])):
+                    # Metrobank's data sometimes pairs a promo with another business's branch. A generic
+                    # branch label ("BGC") is most likely this promo's own branch; a full different name is not.
+                    if len(br.get("name") or "") > 12:
+                        continue
+                    merchant = name_from_title(p["title"])
+                elif not _matches(merchant, p["title"]):
+                    merchant = name_from_title(p["title"])
                 branches.append({
-                    "merchant": (br.get("merchant") or {}).get("name"),
+                    "merchant": merchant,
                     "name": br.get("name"),
                     "address": br.get("address"),
                     "area": area,
