@@ -1,0 +1,9 @@
+__pycache__/
+.venv/
+*.pyc
+android/local.properties
+android/.gradle/
+android/build/
+android/app/build/
+*.jks
+keystore.properties
