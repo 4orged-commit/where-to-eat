@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-08T11:58:54+00:00",
+ "updated": "2026-10-08T12:28:15+00:00",
  "banks": {
   "Metrobank": {
    "status": "ok",
-   "updated": "2026-10-08T11:58:54+00:00",
-   "count": 19
+   "updated": "2026-10-08T12:28:15+00:00",
+   "count": 34
   },
   "BDO": {
    "status": "manual",
@@ -179,7 +179,7 @@
   {
    "id": "metrobank:Y2ZTDVaMTf-QHK7yH-C8yA",
    "bank": "Metrobank",
-   "title": "10% OFF at Chikaan sa Cebu ",
+   "title": "10% OFF at Chikaan sa Cebu",
    "description": "Get it for a minimum single-receipt spend of PHP 2,000 with maximum discount of PHP 500.",
    "cards": [
     "Cashback Visa",
@@ -700,6 +700,515 @@
      "area": "Alabang",
      "lat": 14.4240678,
      "lon": 121.0396531
+    }
+   ]
+  },
+  {
+   "id": "metrobank:d31Ux0mTRhW2wqWBF8_FWA",
+   "bank": "Metrobank",
+   "title": "50% OFF at Grand Hyatt Manila restaurants",
+   "description": "Enjoy this deal with your Metrobank World or Platinum Mastercard credit card.",
+   "cards": [
+    "Platinum Mastercard",
+    "World Mastercard"
+   ],
+   "start": "2026-10-01T00:00:00+08:00",
+   "end": "2026-10-30T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/fifty-percent-off-at-grand-hyatt-manila-restaurants",
+   "branches": [
+    {
+     "merchant": "Grand Hyatt Manila restaurants",
+     "name": "",
+     "address": "8th Avenue corner 35th Street, Bonifacio Global City, Taguig City, Manila, 1635",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:cGO1-uKMRh6s0dPz9dVLMA",
+   "bank": "Metrobank",
+   "title": "50% OFF at Bistro Group restaurants",
+   "description": "Enjoy this offer with your Metrobank Visa credit card.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "Rewards Plus Visa",
+    "Travel Platinum Visa",
+    "Travel Signature Visa"
+   ],
+   "start": "2026-10-01T00:00:00+08:00",
+   "end": "2026-11-26T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-at-bistro-group-restaurants",
+   "branches": [
+    {
+     "merchant": "Bistro Group restaurants",
+     "name": "Morton’s The Steakhouse",
+     "address": "11th Avenue corner 36th Street, Uptown Eastgate, Bonifacio Global City, Taguig City",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:StklxMrjS22rw0CM-ZSMMg",
+   "bank": "Metrobank",
+   "title": "20% OFF at Carlo's & Izakaya Geronimo",
+   "description": "Enjoy this offer on your total bill.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-09-01T00:00:00+08:00",
+   "end": "2026-12-31T00:00:00+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-at-carlos-and-izakaya-geronimo",
+   "branches": [
+    {
+     "merchant": "Carlo's & Izakaya Geronimo",
+     "name": "",
+     "address": "Izakaya Geronimo and Carlo’s at G/F Asian Century Center, 27th St. BGC, Taguig",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:aCjp05WYT1upVBfCDzh9uw",
+   "bank": "Metrobank",
+   "title": "20% OFF at Ono Aloha Kitchen",
+   "description": "Avail this deal for a minimum spend of PHP 3,000.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-09-01T00:00:00+08:00",
+   "end": "2026-11-30T00:00:00+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-at-ono-aloha-kitchen",
+   "branches": [
+    {
+     "merchant": "Ono Aloha Kitchen",
+     "name": "",
+     "address": "Ono Aloha Kitchen Molito - Molito Lifestyle Center Muntinlupa City",
+     "area": "Alabang",
+     "lat": null,
+     "lon": null
+    },
+    {
+     "merchant": "Ono Aloha Kitchen",
+     "name": "",
+     "address": "Ono Aloha Kitchen Mitsukoshi Mall - Basement 1, Mitsukoshi Mall, BGC, Taguig City",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    },
+    {
+     "merchant": "Ono Aloha Kitchen",
+     "name": "",
+     "address": "Ono Aloha Kitchen Food District - LG, One Bonifacio High Street, Taguig City",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:R7cAl_15S0W2TKVS5A0-RA",
+   "bank": "Metrobank",
+   "title": "10% OFF at Dot Coffee",
+   "description": "Avail this deal for a minimum spend of PHP 300.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-09-01T00:00:00+08:00",
+   "end": "2027-03-31T00:00:00+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-at-dot-coffee",
+   "branches": [
+    {
+     "merchant": "Dot Coffee",
+     "name": "",
+     "address": "The Mind Museum - 109 Rizal Dr, BGC, Taguig City",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    },
+    {
+     "merchant": "Dot Coffee",
+     "name": "",
+     "address": "W City Center - 7th Ave, cor 30th St, BGC, Taguig City",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    },
+    {
+     "merchant": "Dot Coffee",
+     "name": "",
+     "address": "W Global Center - 9th Ave, Lane P, BGC, Taguig City",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    },
+    {
+     "merchant": "Dot Coffee",
+     "name": "",
+     "address": "Uptown Mall - 3F, Uptown Mall 11th Dr, Taguig City",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:EdfZYXg4TwmyRqEAym9cAQ",
+   "bank": "Metrobank",
+   "title": "FREE Dish at Electric Garden",
+   "description": "FREE Half-Roll Maki Sushi for a minimum spend of PHP 5,000.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-09-01T00:00:00+08:00",
+   "end": "2026-11-30T00:00:00+08:00",
+   "url": "https://www.metrobank.com.ph/promos/free-dish-at-electric-garden",
+   "branches": [
+    {
+     "merchant": "Electric Garden",
+     "name": "",
+     "address": "Electric Garden, Unit 3 to 7 Capital House 9th Ave. cor. 34th St. Bonifacio Global City, Taguig",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:GFG4CjxpSriLrD8oQKkNaw",
+   "bank": "Metrobank",
+   "title": "Up to 50% OFF at Hashi Pan-Asian Restaurant",
+   "description": "Enjoy this for a minimum spend of PHP 2,500.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-08-01T00:00:00+08:00",
+   "end": "2026-12-31T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-at-hashi-pan-asian-restaurant",
+   "branches": [
+    {
+     "merchant": "Hashi Pan-Asian Restaurant",
+     "name": "",
+     "address": "Hashi Pan-Asian Mckinley Hill",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:NBHg_J6kRCuzGMoygLXfPw",
+   "bank": "Metrobank",
+   "title": "10% OFF at Pedal Café",
+   "description": "Enjoy this offer for a minimum spend of PHP 500.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-08-01T00:00:00+08:00",
+   "end": "2026-10-31T00:00:00+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-at-pedal-cafe",
+   "branches": [
+    {
+     "merchant": "Pedal Café",
+     "name": "",
+     "address": "Pedal Café Uptown — 3rd Floor, Uptown Mall, Taguig City. Tel: 0962 499 3853",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:Pb0-saLxTeytVZwaC_5QwQ",
+   "bank": "Metrobank",
+   "title": "10% OFF at Moshi Koshi Noodle Boss",
+   "description": "Score this for a minimum single-receipt spend of PHP 800.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-06-01T00:00:00+08:00",
+   "end": "2026-12-31T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-at-moshi-koshi-noodle-boss",
+   "branches": [
+    {
+     "merchant": "Moshi Koshi Noodle Boss",
+     "name": "",
+     "address": "Moshi Koshi Noodle Boss, 2nd Level Main Mall, Market! Market!, BGC, Taguig",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:Q6sV5ANHRUGDYvZOHemaDQ",
+   "bank": "Metrobank",
+   "title": "10% OFF at The Pearl Room",
+   "description": "Score this discount on your food bill.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-05-01T00:00:00+08:00",
+   "end": "2026-10-31T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-at-the-pearl-room",
+   "branches": [
+    {
+     "merchant": "The Pearl Room",
+     "name": "The Pearl Room BGC",
+     "address": "Verve Residences, Tower 2, Bonifacio Global City, Taguig City",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:A3EwmHFNTCmDb9lqL99Ysg",
+   "bank": "Metrobank",
+   "title": "10% OFF at Sen-ryo",
+   "description": "Enjoy this deal for a minimum single-receipt spend of PHP 3,000.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-04-01T00:00:00+08:00",
+   "end": "2026-12-29T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/ten-percent-off-at-senryo",
+   "branches": [
+    {
+     "merchant": "Sen-ryo",
+     "name": "Mitsukoshi Mall",
+     "address": "2/F Mitsukoshi Mall, 8th Ave. corner 36th Street, BGC, Taguig",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:di0jb4SLT0-JVb5mWosmGA",
+   "bank": "Metrobank",
+   "title": "10% OFF at Mango Tree",
+   "description": "Enjoy this deal for a minimum single-receipt spend of PHP 3,000.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-04-01T00:00:00+08:00",
+   "end": "2026-12-29T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/ten-percent-off-at-mango-tree",
+   "branches": [
+    {
+     "merchant": "Mango Tree",
+     "name": "BGC High Street Central",
+     "address": "7th Avenue, Bonifacio High Street Central, BGC, Taguig City",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:OkerWCL5T6qlxqqc2CJQNw",
+   "bank": "Metrobank",
+   "title": "10% OFF at Wong Place",
+   "description": "Enjoy this deal for a minimum single-receipt spend of PHP 3,000.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-04-01T00:00:00+08:00",
+   "end": "2026-12-29T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/ten-percent-off-at-wong-place",
+   "branches": [
+    {
+     "merchant": "Wong Place",
+     "name": "BGC High Street South",
+     "address": "Ground Level, Verve Residences Tower 2, BGC High Street South, BGC, Taguig",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:EFe-QKf1QBm20wEib8Q9HQ",
+   "bank": "Metrobank",
+   "title": "10% OFF at Genki Sushi",
+   "description": "Enjoy this deal for a minimum single-receipt spend of PHP 3,000.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-04-01T00:00:00+08:00",
+   "end": "2026-12-29T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/ten-percent-off-at-genki-sushi",
+   "branches": [
+    {
+     "merchant": "Genki Sushi",
+     "name": "BGC Stopover",
+     "address": "2/F BGC Stopover, 31st St. corner Rizal Drive, BGC, Taguig City",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    },
+    {
+     "merchant": "Genki Sushi",
+     "name": "SM Aura Premier",
+     "address": "L/G Level, SM Aura Premier, BGC, Taguig City",
+     "area": "BGC",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:QFcEvQXVQMeQ_8IkSpycxg",
+   "bank": "Metrobank",
+   "title": "Up to 65% OFF at The Bellevue",
+   "description": "Enjoy discounts on rooms and dining with Metrobank credit cards.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-03-01T00:00:00+08:00",
+   "end": "2026-12-29T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-accommodation-the-bellevue-manila",
+   "branches": [
+    {
+     "merchant": "The Bellevue",
+     "name": "",
+     "address": "The Bellevue, Alabang",
+     "area": "Alabang",
+     "lat": null,
+     "lon": null
     }
    ]
   },
