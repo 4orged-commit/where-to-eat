@@ -47,8 +47,8 @@ fun BankLogo(bank: String, size: Dp = 20.dp) {
 }
 
 /**
- * The restaurant's logo. Bank thumbnails are wide white panels; Metrobank's "Metro Dining Deals" ones put the
- * restaurant's logo on the right half, so that half is shown. Without an image, a letter badge stands in.
+ * The restaurant's logo (already cut out of the bank's promo panel by the feed), shown whole on a white tile.
+ * Without an image, a letter badge stands in.
  */
 @Composable
 fun PlaceLogo(name: String, image: String?, size: Dp = 60.dp) {
@@ -70,12 +70,10 @@ fun PlaceLogo(name: String, image: String?, size: Dp = 60.dp) {
         letter()
         return
     }
-    val rightHalf = "mdd-thumbnail" in image
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current).data(image).crossfade(true).build(),
         contentDescription = "$name logo",
-        contentScale = if (rightHalf) ContentScale.Crop else ContentScale.Fit,
-        alignment = if (rightHalf) Alignment.CenterEnd else Alignment.Center,
+        contentScale = ContentScale.Fit,
         modifier = Modifier.size(size).clip(shape).background(Color.White),
         loading = { letter() },
         error = { letter() },

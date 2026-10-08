@@ -137,7 +137,13 @@ def detail_branches(p):
 
 def _thumb(p):
     url = (p.get("cardLogoImage") or p.get("cardBannerImage") or {}).get("url")
-    return f"{url}?auto=format&fm=png&w=320" if url else None
+    if not url:
+        return None
+    # Most dining thumbnails are 1144x644 panels: Metrobank's "Metro Dining Deals" badge on the left, the restaurant's
+    # logo on the right. The image server (imgix) can cut out just the logo square.
+    if re.search(r"mdd|1144-x-644|1144x644", url):
+        return f"{url}?rect=552,26,592,592&auto=format&fm=png&w=256"
+    return f"{url}?auto=format&fm=png&w=320"
 
 
 def run():
