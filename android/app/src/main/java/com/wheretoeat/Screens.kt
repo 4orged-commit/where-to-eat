@@ -3,6 +3,20 @@ package com.wheretoeat
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -237,14 +251,19 @@ fun HomeScreen(state: AppState) {
         (!state.favoritesOnly || p.key in state.favorites) &&
             (q.isEmpty() || p.name.contains(q, true) || p.deals.any { it.promo.title.contains(q, true) })
     }
+    var searching by remember { mutableStateOf(state.query.isNotEmpty()) }
+    BackHandler(enabled = searching) { state.query = ""; searching = false }
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Where to eat", fontWeight = FontWeight.SemiBold) },
+                title = {
+                    if (searching) SearchField(state) { state.query = ""; searching = false }
+                    else Text("Where to eat", fontWeight = FontWeight.SemiBold)
+                },
                 actions = {
+                    if (!searching) IconButton(onClick = { searching = true }) { Icon(Icons.Default.Search, "Search") }
                     if (state.refreshing) {
-                        CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.5.dp)
-                        Spacer(Modifier.width(12.dp))
+                        CircularProgressIndicator(Modifier.padding(horizontal = 13.dp).size(22.dp), strokeWidth = 2.5.dp)
                     } else {
                         IconButton(onClick = { state.refresh() }) { Icon(Icons.Default.Refresh, "Refresh promos") }
                     }
@@ -270,15 +289,15 @@ fun HomeScreen(state: AppState) {
             onRefresh = { state.refresh() },
             modifier = Modifier.fillMaxSize().padding(pad),
         ) {
-            LazyColumn(
-                Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 96.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
+            LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 96.dp)) {
                 item {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        AreaPicker(areas, area, Modifier.weight(1f)) { state.chooseArea(it) }
-                        Spacer(Modifier.width(10.dp))
+                    // One scrolling row of filters: location, favorites, then a chip per bank.
+                    Row(
+                        Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        AreaChip(areas, area) { state.chooseArea(it) }
                         FilterChip(
                             selected = state.favoritesOnly,
                             onClick = { state.favoritesOnly = !state.favoritesOnly },
@@ -288,25 +307,16 @@ fun HomeScreen(state: AppState) {
                                     Modifier.size(18.dp))
                             },
                         )
-                    }
-                }
-                item { SearchField(state) }
-                if (banks.size > 1) {
-                    item {
-                        Row(
-                            Modifier.horizontalScroll(rememberScrollState()),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        ) {
-                            banks.forEach { b ->
-                                FilterChip(
-                                    selected = b in bankFilter,
-                                    onClick = { state.toggleBank(b) },
-                                    label = { Text(b) },
-                                    leadingIcon = { BankLogo(b, 18.dp) },
-                                )
-                            }
+                        if (banks.size > 1) banks.forEach { b ->
+                            FilterChip(
+                                selected = b in bankFilter,
+                                onClick = { state.toggleBank(b) },
+                                label = { Text(b) },
+                                leadingIcon = { BankLogo(b, 18.dp) },
+                            )
                         }
                     }
+                    Spacer(Modifier.height(4.dp))
                 }
                 if (state.lastRefreshOk == false) {
                     item { Note("Couldn't reach the promo feed. Showing the last saved promos.") }
@@ -323,11 +333,12 @@ fun HomeScreen(state: AppState) {
                         )
                     }
                 }
-                items(places, key = { it.key }) { p ->
-                    PlaceCard(
-                        p, p.key in state.favorites, isNew = p.deals.any { state.isNew(it.promo.id) },
-                        onFavorite = { state.toggleFavorite(p.key) },
-                    ) { state.open(p) }
+                itemsIndexed(places, key = { _, p -> p.key }) { i, p ->
+                    PlaceRow(p, p.key in state.favorites, isNew = p.deals.any { state.isNew(it.promo.id) }) { state.open(p) }
+                    if (i < places.lastIndex) {
+                        HorizontalDivider(Modifier.padding(start = 68.dp, end = 16.dp),
+                            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+                    }
                 }
                 item { SourcesFooter(state) }
             }
@@ -335,110 +346,117 @@ fun HomeScreen(state: AppState) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+/** The location, as a compact chip that opens a menu of every area in the feed. */
 @Composable
-private fun AreaPicker(areas: List<String>, area: String, modifier: Modifier, onPick: (String) -> Unit) {
+private fun AreaChip(areas: List<String>, area: String, onPick: (String) -> Unit) {
     var open by remember { mutableStateOf(false) }
-    ExposedDropdownMenuBox(expanded = open, onExpandedChange = { open = it }, modifier = modifier) {
-        OutlinedTextField(
-            value = area,
-            onValueChange = {},
-            readOnly = true,
-            singleLine = true,
-            label = { Text("Location") },
-            leadingIcon = { Icon(Icons.Default.Place, null) },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = open) },
-            shape = RoundedCornerShape(16.dp),
-            modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
+    androidx.compose.foundation.layout.Box {
+        FilterChip(
+            selected = true,
+            onClick = { open = true },
+            label = { Text(area, fontWeight = FontWeight.SemiBold) },
+            leadingIcon = { Icon(Icons.Default.Place, null, Modifier.size(18.dp)) },
+            trailingIcon = { Icon(Icons.Default.ArrowDropDown, "Change location", Modifier.size(18.dp)) },
         )
-        ExposedDropdownMenu(expanded = open, onDismissRequest = { open = false }) {
+        DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
             areas.forEach { a ->
                 DropdownMenuItem(
                     text = { Text(a, fontWeight = if (a == area) FontWeight.SemiBold else FontWeight.Normal) },
+                    leadingIcon = { if (a == area) Icon(Icons.Default.Check, null) },
                     onClick = { onPick(a); open = false },
-                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                 )
             }
         }
     }
 }
 
+/** Search typed straight into the top bar; the X clears it and closes search. */
 @Composable
-private fun SearchField(state: AppState) {
-    val focus = LocalFocusManager.current
-    OutlinedTextField(
+private fun SearchField(state: AppState, onClose: () -> Unit) {
+    val focus = remember { FocusRequester() }
+    LaunchedEffect(Unit) { focus.requestFocus() }
+    TextField(
         value = state.query,
         onValueChange = { state.query = it },
         singleLine = true,
         placeholder = { Text("Search restaurants") },
-        leadingIcon = { Icon(Icons.Default.Search, null) },
-        trailingIcon = {
-            if (state.query.isNotEmpty()) IconButton(onClick = { state.query = ""; focus.clearFocus() }) {
-                Icon(Icons.Default.Close, "Clear search")
-            }
-        },
+        trailingIcon = { IconButton(onClick = onClose) { Icon(Icons.Default.Close, "Close search") } },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-        keyboardActions = androidx.compose.foundation.text.KeyboardActions(onSearch = { focus.clearFocus() }),
-        shape = RoundedCornerShape(16.dp),
-        modifier = Modifier.fillMaxWidth(),
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Color.Transparent, unfocusedContainerColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent,
+        ),
+        modifier = Modifier.fillMaxWidth().focusRequester(focus),
     )
 }
 
 @Composable
 private fun Note(text: String) {
-    Surface(shape = RoundedCornerShape(16.dp), color = MaterialTheme.colorScheme.secondaryContainer) {
+    Surface(
+        shape = RoundedCornerShape(16.dp), color = MaterialTheme.colorScheme.secondaryContainer,
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
+    ) {
         Text(text, Modifier.padding(14.dp), color = MaterialTheme.colorScheme.onSecondaryContainer,
             style = MaterialTheme.typography.bodyMedium)
     }
 }
 
-@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+/**
+ * One restaurant as a two-line row: logo, name, then bank logo + card · day rule (only when limited) · min spend ·
+ * end date; the discount sits on the right, dimmed when the deal doesn't work today.
+ */
 @Composable
-private fun PlaceCard(place: Place, favorite: Boolean, isNew: Boolean, onFavorite: () -> Unit, onClick: () -> Unit) {
+private fun PlaceRow(place: Place, favorite: Boolean, isNew: Boolean, onClick: () -> Unit) {
     val d = place.best
-    Card(
-        onClick = onClick,
-        shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
-        modifier = Modifier.animateContentSize(),
-    ) {
-        Row(Modifier.padding(start = 14.dp, top = 14.dp, bottom = 14.dp)) {
-            PlaceLogo(place.name, place.image, 60.dp)
-            Spacer(Modifier.width(14.dp))
-            Column(Modifier.weight(1f)) {
-                Row(verticalAlignment = Alignment.Top) {
-                    Text(
-                        place.name, Modifier.weight(1f).padding(top = 2.dp),
-                        style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold,
-                        maxLines = 2, overflow = TextOverflow.Ellipsis,
-                    )
-                    Box48 { FavoriteButton(favorite, onFavorite) }
-                }
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                    if (isNew) NewPill()
-                    Pill(discountLabel(d.promo), MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.onPrimary)
-                    TodayPill(d.promo)
-                }
-                Spacer(Modifier.height(6.dp))
-                TermsLine(d.promo)
-                Spacer(Modifier.height(8.dp))
-                Row(Modifier.padding(end = 14.dp), verticalAlignment = Alignment.CenterVertically) {
-                    CardLine(d, Modifier.weight(1f))
-                    if (place.deals.size > 1) {
-                        val more = place.deals.size - 1
-                        Text("+$more more deal" + if (more > 1) "s" else "", style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.tertiary, fontWeight = FontWeight.SemiBold)
-                    }
-                }
-            }
+    val p = d.promo
+    val today = worksToday(p)
+    val warn = amber()
+    val muted = MaterialTheme.colorScheme.onSurfaceVariant
+    val details = buildAnnotatedString {
+        append(cardName(p.bank, d.myCards.first()).replace("Mastercard", "MC"))
+        dayRuleText(p)?.let { append(" · "); append(if (today) it else "$it only") }
+        minSpend(p)?.let { append(" · Min ₱${pesos.format(it)}") }
+        if (endingSoon(p)) {
+            append(" · ")
+            withStyle(SpanStyle(color = warn, fontWeight = FontWeight.SemiBold)) { append(endsText(p)!!) }
         }
     }
-}
-
-/** Keeps the star button from pushing the card's text around. */
-@Composable
-private fun Box48(content: @Composable () -> Unit) {
-    androidx.compose.foundation.layout.Box(Modifier.size(40.dp), contentAlignment = Alignment.Center) { content() }
+    Row(
+        Modifier.fillMaxWidth().clickable(onClick = onClick).padding(horizontal = 16.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        PlaceLogo(place.name, place.image, 40.dp)
+        Spacer(Modifier.width(12.dp))
+        Column(Modifier.weight(1f)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    place.name, Modifier.weight(1f, fill = false),
+                    style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold,
+                    maxLines = 1, overflow = TextOverflow.Ellipsis,
+                )
+                if (favorite) Icon(Icons.Default.Star, "Favorite", Modifier.padding(start = 4.dp).size(16.dp), tint = warn)
+                if (isNew) Text("NEW", Modifier.padding(start = 6.dp), style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.tertiary, fontWeight = FontWeight.Bold)
+            }
+            Spacer(Modifier.height(3.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                BankLogo(p.bank, 14.dp)
+                Spacer(Modifier.width(6.dp))
+                Text(details, style = MaterialTheme.typography.bodySmall, color = muted,
+                    maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
+        }
+        Spacer(Modifier.width(10.dp))
+        Column(horizontalAlignment = Alignment.End) {
+            Text(
+                discountLabel(p).removePrefix("Up to "),
+                style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold,
+                color = if (today) MaterialTheme.colorScheme.primary else muted,
+            )
+            if (place.deals.size > 1) Text("+${place.deals.size - 1} more", style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.tertiary)
+        }
+    }
 }
 
 @Composable
@@ -453,7 +471,7 @@ private fun SourcesFooter(state: AppState) {
     }
     Text(
         "Promo sources\n$lines",
-        Modifier.padding(top = 8.dp, start = 4.dp),
+        Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp),
         style = MaterialTheme.typography.labelMedium,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
