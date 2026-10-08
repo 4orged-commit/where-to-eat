@@ -18,7 +18,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -120,6 +123,27 @@ private fun openMaps(ctx: Context, b: Branch) {
     }
 }
 
+/** Sends a deal to Messenger, Viber, etc. as a short plain-text message. */
+private fun shareDeal(ctx: Context, place: Place, d: Deal) {
+    val p = d.promo
+    val b = d.branches.first()
+    val terms = listOfNotNull(
+        dayRuleText(p)?.let { "$it only" } ?: "Any day",
+        minSpend(p)?.let { "min ₱${pesos.format(it)}" },
+        p.end?.let { "until ${it.format(dateFmt)}" },
+    ).joinToString(" · ")
+    val maps = "https://www.google.com/maps/search/?api=1&query=" + Uri.encode("${b.merchant} ${b.address}")
+    val text = buildString {
+        appendLine("${place.name}: ${discountLabel(p)}")
+        appendLine("${p.bank} ${d.myCards.joinToString(" or ") { cardName(p.bank, it) }} · $terms")
+        appendLine(listOf(b.name.ifBlank { b.merchant }, b.address).filter { it.isNotBlank() }.distinct().joinToString(", "))
+        appendLine("Map: $maps")
+        if (p.url.isNotBlank()) append("Promo: ${p.url}")
+    }.trim()
+    val send = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text)
+    ctx.startActivity(Intent.createChooser(send, "Share deal"))
+}
+
 private fun openLink(ctx: Context, url: String) {
     runCatching { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) }
 }
@@ -136,6 +160,9 @@ private fun Pill(text: String, container: Color, content: Color, icon: (@Composa
         }
     }
 }
+
+@Composable
+private fun NewPill() = Pill("NEW", MaterialTheme.colorScheme.tertiary, MaterialTheme.colorScheme.onTertiary)
 
 @Composable
 private fun TodayPill(p: Promo) {
@@ -199,8 +226,14 @@ fun HomeScreen(state: AppState) {
     val areas = remember(state.feed) { areasOf(state.feed) }
     val area = if (state.area in areas) state.area else areas.first()
     val all = remember(state.feed, area, state.myCards) { rankPlaces(state.feed, area, state.myCards) }
+    val banks = remember(all) { all.flatMap { p -> p.deals.map { it.promo.bank } }.distinct().sorted() }
+    val bankFilter = state.bankFilter.intersect(banks.toSet())
     val q = state.query.trim()
-    val places = all.filter { p ->
+    val places = all.mapNotNull { p ->
+        // With bank chips picked, a place keeps only those banks' deals (so its headline deal is one you can use).
+        if (bankFilter.isEmpty()) p else p.deals.filter { it.promo.bank in bankFilter }.takeIf { it.isNotEmpty() }
+            ?.let { p.copy(deals = it) }
+    }.filter { p ->
         (!state.favoritesOnly || p.key in state.favorites) &&
             (q.isEmpty() || p.name.contains(q, true) || p.deals.any { it.promo.title.contains(q, true) })
     }
@@ -258,6 +291,23 @@ fun HomeScreen(state: AppState) {
                     }
                 }
                 item { SearchField(state) }
+                if (banks.size > 1) {
+                    item {
+                        Row(
+                            Modifier.horizontalScroll(rememberScrollState()),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            banks.forEach { b ->
+                                FilterChip(
+                                    selected = b in bankFilter,
+                                    onClick = { state.toggleBank(b) },
+                                    label = { Text(b) },
+                                    leadingIcon = { BankLogo(b, 18.dp) },
+                                )
+                            }
+                        }
+                    }
+                }
                 if (state.lastRefreshOk == false) {
                     item { Note("Couldn't reach the promo feed. Showing the last saved promos.") }
                 }
@@ -274,7 +324,10 @@ fun HomeScreen(state: AppState) {
                     }
                 }
                 items(places, key = { it.key }) { p ->
-                    PlaceCard(p, p.key in state.favorites, onFavorite = { state.toggleFavorite(p.key) }) { state.open(p) }
+                    PlaceCard(
+                        p, p.key in state.favorites, isNew = p.deals.any { state.isNew(it.promo.id) },
+                        onFavorite = { state.toggleFavorite(p.key) },
+                    ) { state.open(p) }
                 }
                 item { SourcesFooter(state) }
             }
@@ -341,7 +394,7 @@ private fun Note(text: String) {
 
 @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
-private fun PlaceCard(place: Place, favorite: Boolean, onFavorite: () -> Unit, onClick: () -> Unit) {
+private fun PlaceCard(place: Place, favorite: Boolean, isNew: Boolean, onFavorite: () -> Unit, onClick: () -> Unit) {
     val d = place.best
     Card(
         onClick = onClick,
@@ -362,6 +415,7 @@ private fun PlaceCard(place: Place, favorite: Boolean, onFavorite: () -> Unit, o
                     Box48 { FavoriteButton(favorite, onFavorite) }
                 }
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    if (isNew) NewPill()
                     Pill(discountLabel(d.promo), MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.onPrimary)
                     TodayPill(d.promo)
                 }
@@ -440,7 +494,9 @@ fun DetailScreen(state: AppState) {
                     }
                 }
             }
-            items(place.deals, key = { it.promo.id }) { d -> DealPanel(d) { openLink(ctx, d.promo.url) } }
+            items(place.deals, key = { it.promo.id }) { d ->
+                DealPanel(d, state.isNew(d.promo.id), onShare = { shareDeal(ctx, place, d) }) { openLink(ctx, d.promo.url) }
+            }
             item { Text("Where in ${state.area}", style = MaterialTheme.typography.titleMedium) }
             items(branches) { b ->
                 Card(
@@ -474,7 +530,7 @@ fun DetailScreen(state: AppState) {
 
 @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
-private fun DealPanel(d: Deal, onPromoPage: () -> Unit) {
+private fun DealPanel(d: Deal, isNew: Boolean, onShare: () -> Unit, onPromoPage: () -> Unit) {
     val p = d.promo
     Surface(shape = RoundedCornerShape(24.dp), color = MaterialTheme.colorScheme.surfaceContainerHigh) {
         Column(Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -487,6 +543,7 @@ private fun DealPanel(d: Deal, onPromoPage: () -> Unit) {
             if (p.description.isNotBlank()) Text(p.description, style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                if (isNew) NewPill()
                 TodayPill(p)
             }
             TermsLine(p)
@@ -497,7 +554,12 @@ private fun DealPanel(d: Deal, onPromoPage: () -> Unit) {
             val dates = listOfNotNull(p.start?.let { "From ${it.format(dateFmt)}" }, p.end?.let { "until ${it.format(dateFmt)}" })
             if (dates.isNotEmpty()) Text(dates.joinToString(" "), style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
-            if (p.url.isNotBlank()) OutlinedButton(onClick = onPromoPage) { Text("${p.bank} promo page") }
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                FilledTonalButton(onClick = onShare) {
+                    Icon(Icons.Default.Share, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text("Share")
+                }
+                if (p.url.isNotBlank()) OutlinedButton(onClick = onPromoPage) { Text("${p.bank} promo page") }
+            }
         }
     }
 }

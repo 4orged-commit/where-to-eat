@@ -24,6 +24,18 @@ class AppState(app: Application) : AndroidViewModel(app) {
         private set
     var favoritesOnly by mutableStateOf(false)
     var query by mutableStateOf("")
+    /** Banks picked in the filter chips; empty means all banks. */
+    var bankFilter by mutableStateOf(emptySet<String>())
+        private set
+
+    /**
+     * Promo ids the user had already been shown before this launch. Anything else is "New". On the very first
+     * launch everything counts as seen, so the first list isn't all badges.
+     */
+    private val seenBefore: Set<String> =
+        prefs.getStringSet("seen", null)?.toSet() ?: feed.promos.map { it.id }.toSet()
+    private val newIds = mutableStateOf(emptySet<String>())
+    fun isNew(promoId: String) = promoId in newIds.value
     var screen by mutableStateOf(if (myCards.isEmpty()) Screen.Settings else Screen.Home)
         private set
     var selected by mutableStateOf<Place?>(null)
@@ -35,7 +47,15 @@ class AppState(app: Application) : AndroidViewModel(app) {
         private set
 
     init {
+        markSeen()
         if (FeedRepo.cacheAgeHours(app) >= 6) refresh()
+    }
+
+    /** Works out which promos are new since the last launch, and remembers the current ones for next time. */
+    private fun markSeen() {
+        val ids = feed.promos.map { it.id }.toSet()
+        newIds.value = ids - seenBefore
+        prefs.edit().putStringSet("seen", ids).apply()
     }
 
     fun refresh() {
@@ -43,10 +63,17 @@ class AppState(app: Application) : AndroidViewModel(app) {
         refreshing = true
         viewModelScope.launch {
             val fresh = FeedRepo.refresh(getApplication())
-            if (fresh != null) feed = fresh
+            if (fresh != null) {
+                feed = fresh
+                markSeen()
+            }
             lastRefreshOk = fresh != null
             refreshing = false
         }
+    }
+
+    fun toggleBank(bank: String) {
+        bankFilter = if (bank in bankFilter) bankFilter - bank else bankFilter + bank
     }
 
     fun chooseArea(a: String) {
