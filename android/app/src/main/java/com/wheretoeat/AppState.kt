@@ -20,9 +20,13 @@ class AppState(app: Application) : AndroidViewModel(app) {
         private set
     var myCards by mutableStateOf(prefs.getStringSet("cards", emptySet())!!.toSet())
         private set
+    var favorites by mutableStateOf(prefs.getStringSet("favorites", emptySet())!!.toSet())
+        private set
+    var favoritesOnly by mutableStateOf(false)
+    var query by mutableStateOf("")
     var screen by mutableStateOf(if (myCards.isEmpty()) Screen.Settings else Screen.Home)
         private set
-    var selected by mutableStateOf<Deal?>(null)
+    var selected by mutableStateOf<Place?>(null)
         private set
     var refreshing by mutableStateOf(false)
         private set
@@ -55,8 +59,13 @@ class AppState(app: Application) : AndroidViewModel(app) {
         prefs.edit().putStringSet("cards", myCards).apply()
     }
 
-    fun open(deal: Deal) {
-        selected = deal
+    fun toggleFavorite(placeKey: String) {
+        favorites = if (placeKey in favorites) favorites - placeKey else favorites + placeKey
+        prefs.edit().putStringSet("favorites", favorites).apply()
+    }
+
+    fun open(place: Place) {
+        selected = place
         screen = Screen.Detail
     }
 

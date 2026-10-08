@@ -129,8 +129,15 @@ def detail_branches(p):
         if key in seen:
             continue
         seen.add(key)
-        found.append({"merchant": merchant, "name": name, "address": address, "area": area, "lat": None, "lon": None})
+        # Group promos ("50% OFF at Bistro Group restaurants") name the actual restaurant per branch.
+        place = name if name and re.search(r"restaurants|group", merchant, re.I) else merchant
+        found.append({"merchant": place, "name": name, "address": address, "area": area, "lat": None, "lon": None})
     return found
+
+
+def _thumb(p):
+    url = (p.get("cardLogoImage") or p.get("cardBannerImage") or {}).get("url")
+    return f"{url}?auto=format&fm=png&w=320" if url else None
 
 
 def run():
@@ -187,6 +194,8 @@ def run():
             "start": p.get("startDate"),
             "end": end,
             "url": "https://www.metrobank.com.ph/promos" + p["slug"],
+            # The promo's thumbnail: the restaurant's logo on a white panel (shown as the place's logo in the app).
+            "image": _thumb(p),
             "branches": branches,
         })
     return out

@@ -23,6 +23,8 @@ data class Promo(
     val start: OffsetDateTime?,
     val end: OffsetDateTime?,
     val url: String,
+    /** The restaurant's logo / promo thumbnail, if the bank provides one. */
+    val image: String?,
     val branches: List<Branch>,
 )
 
@@ -85,6 +87,7 @@ fun parseFeed(text: String): Feed {
                 start = parseDate(p.str("start")),
                 end = parseDate(p.str("end")),
                 url = p.str("url") ?: "",
+                image = p.str("image"),
                 branches = branches,
             )
         }
