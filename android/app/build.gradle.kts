@@ -26,8 +26,8 @@ android {
         applicationId = "com.wheretoeat"
         minSdk = 26
         targetSdk = 35
-        versionCode = 7
-        versionName = "0.6.0"
+        versionCode = 8
+        versionName = "0.6.1"
     }
 
     signingConfigs {
@@ -102,4 +102,6 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.7.0")
 
     testImplementation("junit:junit:4.13.2")
+    // Android's built-in org.json is only a stub in plain JVM unit tests; this is the real one.
+    testImplementation("org.json:json:20240303")
 }

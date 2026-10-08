@@ -1,8 +1,8 @@
-﻿# Where to Eat 0.6.0
+﻿# Where to Eat 0.6.1
 
 Recommends where to eat in **Alabang** and **BGC**, ranked by the best credit-card dining promo for the cards you own.
 
-**The app to install:** `WhereToEat-0.6.0.apk` (signed). Every build lands by itself in Google Drive under **My Drive > Projects > Where to Eat**; open it from the phone's Drive app, allow "Install unknown apps" once, and tap Install.
+**The app to install:** `WhereToEat-0.6.1.apk` (signed). Every build lands by itself in Google Drive under **My Drive > Projects > Where to Eat**; open it from the phone's Drive app, allow "Install unknown apps" once, and tap Install.
 
 ## Using it
 1. First launch: tick the credit cards you own, or the cards of whoever you're eating with (**My cards**, also under the gear icon).

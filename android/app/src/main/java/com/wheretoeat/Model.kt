@@ -45,6 +45,15 @@ data class Feed(
 private fun JSONObject.str(key: String): String? =
     if (isNull(key)) null else optString(key).takeIf { it.isNotBlank() }
 
+/**
+ * Links and images from the feed are only used if they're plain https web addresses. The app hands promo links to
+ * the phone to open, so this stops a tampered feed from making it open anything else (another app, a file, an intent).
+ */
+private fun safeWebUrl(s: String?): String? =
+    s?.trim()?.takeIf { url ->
+        runCatching { java.net.URI(url) }.getOrNull()?.let { it.scheme == "https" && !it.host.isNullOrBlank() } == true
+    }
+
 private fun parseDate(s: String?): OffsetDateTime? =
     runCatching { OffsetDateTime.parse(s) }.getOrNull()
 
@@ -86,8 +95,8 @@ fun parseFeed(text: String): Feed {
                 cards = p.optJSONArray("cards").strings(),
                 start = parseDate(p.str("start")),
                 end = parseDate(p.str("end")),
-                url = p.str("url") ?: "",
-                image = p.str("image"),
+                url = safeWebUrl(p.str("url")) ?: "",
+                image = safeWebUrl(p.str("image")),
                 branches = branches,
             )
         }
