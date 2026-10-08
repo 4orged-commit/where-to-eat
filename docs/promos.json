@@ -1,9 +1,9 @@
 {
- "updated": "2026-10-08T12:56:51+00:00",
+ "updated": "2026-10-08T13:01:03+00:00",
  "banks": {
   "Metrobank": {
    "status": "ok",
-   "updated": "2026-10-08T12:56:51+00:00",
+   "updated": "2026-10-08T13:01:03+00:00",
    "count": 34
   },
   "BDO": {
@@ -102,7 +102,7 @@
    "start": "2026-08-01T00:00:00+08:00",
    "end": "2026-10-31T00:00:00+08:00",
    "url": "https://www.metrobank.com.ph/promos/fifty-percent-off-at-eataewon",
-   "image": "https://web-assets.metrobank.com.ph/1784613423-thumbnail-card-banner-1144-x-644-px-copy.webp?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "image": "https://web-assets.metrobank.com.ph/1784613423-thumbnail-card-banner-1144-x-644-px-copy.webp?rect=584,42,560,560&auto=format&fm=png&w=256",
    "branches": [
     {
      "merchant": "Eataewon",
@@ -135,7 +135,7 @@
    "start": "2026-07-01T00:00:00+08:00",
    "end": "2026-12-31T23:59:59+08:00",
    "url": "https://www.metrobank.com.ph/promos/discounts-cha-yi",
-   "image": "https://web-assets.metrobank.com.ph/1782351556-thumbnail-card-banner-1144-x-644-px-9.jpg?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "image": "https://web-assets.metrobank.com.ph/1782351556-thumbnail-card-banner-1144-x-644-px-9.jpg?rect=584,42,560,560&auto=format&fm=png&w=256",
    "branches": [
     {
      "merchant": "ChaYi",
@@ -168,7 +168,7 @@
    "start": "2026-08-01T00:00:00+08:00",
    "end": "2026-12-30T00:00:00+08:00",
    "url": "https://www.metrobank.com.ph/promos/discounts-at-pad-thai-express",
-   "image": "https://web-assets.metrobank.com.ph/1784773969-thumbnail-card-banner-1144-x-644-px-28-copy.webp?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "image": "https://web-assets.metrobank.com.ph/1784773969-thumbnail-card-banner-1144-x-644-px-28-copy.webp?rect=584,42,560,560&auto=format&fm=png&w=256",
    "branches": [
     {
      "merchant": "Pad Thai Express",
@@ -201,7 +201,7 @@
    "start": "2026-06-01T00:00:00+08:00",
    "end": "2026-11-30T23:59:59+08:00",
    "url": "https://www.metrobank.com.ph/promos/ten-percent-off-at-chikaan-sa-cebu",
-   "image": "https://web-assets.metrobank.com.ph/1781573991-thumbnail-card-banner-1144-x-644-px-10.jpg?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "image": "https://web-assets.metrobank.com.ph/1781573991-thumbnail-card-banner-1144-x-644-px-10.jpg?rect=584,42,560,560&auto=format&fm=png&w=256",
    "branches": [
     {
      "merchant": "Chikaan sa Cebu",
@@ -234,7 +234,7 @@
    "start": "2026-08-01T00:00:00+08:00",
    "end": "2027-01-31T00:00:00+08:00",
    "url": "https://www.metrobank.com.ph/promos/discounts-at-kevin-ong-patisserie",
-   "image": "https://web-assets.metrobank.com.ph/1784688278-thumbnail-card-banner-1144-x-644-px-11-copy.webp?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "image": "https://web-assets.metrobank.com.ph/1784688278-thumbnail-card-banner-1144-x-644-px-11-copy.webp?rect=584,42,560,560&auto=format&fm=png&w=256",
    "branches": [
     {
      "merchant": "Kevin Ong Patisserie",
@@ -267,7 +267,7 @@
    "start": "2026-08-01T00:00:00+08:00",
    "end": "2026-10-31T00:00:00+08:00",
    "url": "https://www.metrobank.com.ph/promos/discounts-dominos-pizza",
-   "image": "https://web-assets.metrobank.com.ph/1784688713-thumbnail-card-banner-1144-x-644-px-24-copy.webp?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "image": "https://web-assets.metrobank.com.ph/1784688713-thumbnail-card-banner-1144-x-644-px-24-copy.webp?rect=584,42,560,560&auto=format&fm=png&w=256",
    "branches": [
     {
      "merchant": "Domino's Pizza",
@@ -324,7 +324,7 @@
    "start": "2026-07-01T00:00:00+08:00",
    "end": "2026-12-31T23:59:59+08:00",
    "url": "https://www.metrobank.com.ph/promos/discounts-origine-brittany-hotel",
-   "image": "https://web-assets.metrobank.com.ph/1782281499-thumbnail-card-banner-1144-x-644-px-18.jpg?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "image": "https://web-assets.metrobank.com.ph/1782281499-thumbnail-card-banner-1144-x-644-px-18.jpg?rect=584,42,560,560&auto=format&fm=png&w=256",
    "branches": [
     {
      "merchant": "Origine at Brittany Hotel",
@@ -357,7 +357,7 @@
    "start": "2026-07-01T00:00:00+08:00",
    "end": "2026-12-31T23:59:59+08:00",
    "url": "https://www.metrobank.com.ph/promos/discounts-for-the-road-brittany-hotel",
-   "image": "https://web-assets.metrobank.com.ph/1782279610-thumbnail-card-banner-1144-x-644-px-13.jpg?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "image": "https://web-assets.metrobank.com.ph/1782279610-thumbnail-card-banner-1144-x-644-px-13.jpg?rect=584,42,560,560&auto=format&fm=png&w=256",
    "branches": [
     {
      "merchant": "For The Road at Brittany Hotel",
@@ -390,7 +390,7 @@
    "start": "2026-07-01T00:00:00+08:00",
    "end": "2026-12-31T23:59:59+08:00",
    "url": "https://www.metrobank.com.ph/promos/ten-percent-off-at-zhen-bao-hotpot",
-   "image": "https://web-assets.metrobank.com.ph/1782183368-thumbnail-card-banner-1144-x-644-px-21.jpg?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "image": "https://web-assets.metrobank.com.ph/1782183368-thumbnail-card-banner-1144-x-644-px-21.jpg?rect=584,42,560,560&auto=format&fm=png&w=256",
    "branches": [
     {
      "merchant": "Zhen Bao",
@@ -431,7 +431,7 @@
    "start": "2026-07-01T00:00:00+08:00",
    "end": "2026-12-31T23:59:59+08:00",
    "url": "https://www.metrobank.com.ph/promos/ten-percent-off-sixdoors-buffet",
-   "image": "https://web-assets.metrobank.com.ph/1782185702-thumbnail-card-banner-1144-x-644-px-20.jpg?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "image": "https://web-assets.metrobank.com.ph/1782185702-thumbnail-card-banner-1144-x-644-px-20.jpg?rect=584,42,560,560&auto=format&fm=png&w=256",
    "branches": [
     {
      "merchant": "Six Doors",
@@ -966,7 +966,7 @@
    "start": "2026-08-01T00:00:00+08:00",
    "end": "2026-12-31T23:59:59+08:00",
    "url": "https://www.metrobank.com.ph/promos/discounts-at-hashi-pan-asian-restaurant",
-   "image": "https://web-assets.metrobank.com.ph/1784775990-thumbnail-card-banner-1144-x-644-px-21-copy.webp?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "image": "https://web-assets.metrobank.com.ph/1784775990-thumbnail-card-banner-1144-x-644-px-21-copy.webp?rect=584,42,560,560&auto=format&fm=png&w=256",
    "branches": [
     {
      "merchant": "Hashi Pan-Asian Restaurant",
@@ -999,7 +999,7 @@
    "start": "2026-08-01T00:00:00+08:00",
    "end": "2026-10-31T00:00:00+08:00",
    "url": "https://www.metrobank.com.ph/promos/discounts-at-pedal-cafe",
-   "image": "https://web-assets.metrobank.com.ph/1784776110-thumbnail-card-banner-1144-x-644-px-29-copy.webp?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "image": "https://web-assets.metrobank.com.ph/1784776110-thumbnail-card-banner-1144-x-644-px-29-copy.webp?rect=584,42,560,560&auto=format&fm=png&w=256",
    "branches": [
     {
      "merchant": "Pedal Café",

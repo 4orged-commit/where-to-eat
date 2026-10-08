@@ -141,7 +141,9 @@ def _thumb(p):
         return None
     # Most dining thumbnails are 1144x644 panels: Metrobank's "Metro Dining Deals" badge on the left, the restaurant's
     # logo on the right. The image server (imgix) can cut out just the logo square.
-    if re.search(r"mdd|1144-x-644|1144x644", url):
+    if "card-banner-1144" in url:  # same panel, but its badge reaches a little further right
+        return f"{url}?rect=584,42,560,560&auto=format&fm=png&w=256"
+    if re.search(r"mdd|1144x644", url):
         return f"{url}?rect=552,26,592,592&auto=format&fm=png&w=256"
     return f"{url}?auto=format&fm=png&w=320"
 
