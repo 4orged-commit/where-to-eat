@@ -3,6 +3,37 @@ package com.wheretoeat
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.material.icons.filled.BrightnessAuto
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.Restaurant
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.boundsInRoot
+import androidx.compose.ui.layout.onGloballyPositioned
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -226,7 +257,17 @@ private fun CardLine(d: Deal, modifier: Modifier = Modifier) {
 
 @Composable
 private fun FavoriteButton(on: Boolean, onClick: () -> Unit) {
-    IconButton(onClick = onClick) {
+    // The star pops with a little bounce when it's switched on or off.
+    val bounce = remember { Animatable(1f) }
+    var last by remember { mutableStateOf(on) }
+    LaunchedEffect(on) {
+        if (on != last) {
+            last = on
+            bounce.snapTo(0.4f)
+            bounce.animateTo(1f, spring(dampingRatio = 0.35f, stiffness = 500f))
+        }
+    }
+    IconButton(onClick = onClick, modifier = Modifier.graphicsLayer { scaleX = bounce.value; scaleY = bounce.value }) {
         if (on) Icon(Icons.Default.Star, "Remove from favorites", tint = amber())
         else Icon(Icons.Outlined.StarOutline, "Add to favorites", tint = MaterialTheme.colorScheme.onSurfaceVariant)
     }
@@ -253,12 +294,24 @@ fun HomeScreen(state: AppState) {
     }
     var searching by remember { mutableStateOf(state.query.isNotEmpty()) }
     BackHandler(enabled = searching) { state.query = ""; searching = false }
+    LaunchedEffect(Unit) {
+        delay(1200)
+        state.listIntroDone = true
+    }
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     if (searching) SearchField(state) { state.query = ""; searching = false }
-                    else Text("Where to eat", fontWeight = FontWeight.SemiBold)
+                    else Column {
+                        Text("Where to eat", style = MaterialTheme.typography.headlineSmall)
+                        Text(
+                            java.time.LocalDate.now().dayOfWeek.name.lowercase().replaceFirstChar { it.uppercase() } +
+                                " · ${places.size} place" + (if (places.size == 1) "" else "s") + " for your cards",
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
                 },
                 actions = {
                     if (!searching) IconButton(onClick = { searching = true }) { Icon(Icons.Default.Search, "Search") }
@@ -267,18 +320,27 @@ fun HomeScreen(state: AppState) {
                     } else {
                         IconButton(onClick = { state.refresh() }) { Icon(Icons.Default.Refresh, "Refresh promos") }
                     }
-                    IconButton(onClick = { state.go(Screen.Settings) }) { Icon(Icons.Default.Settings, "My cards") }
+                    IconButton(onClick = { state.go(Screen.Settings) }) { Icon(Icons.Default.Settings, "Settings") }
                 },
             )
         },
         floatingActionButton = {
             if (places.isNotEmpty()) {
+                val spin = remember { Animatable(0f) }
+                val scope = rememberCoroutineScope()
                 ExtendedFloatingActionButton(
                     onClick = {
+                        if (spin.isRunning) return@ExtendedFloatingActionButton
                         val today = places.filter { worksToday(it.best.promo) }.ifEmpty { places }
-                        state.open(today.take(10).random())
+                        val pick = today.take(10).random()
+                        // Roll the dice, then open the pick.
+                        scope.launch {
+                            spin.snapTo(0f)
+                            spin.animateTo(720f, tween(600, easing = FastOutSlowInEasing))
+                            state.open(pick)
+                        }
                     },
-                    icon = { Icon(Icons.Default.Casino, null) },
+                    icon = { Icon(Icons.Default.Casino, null, Modifier.graphicsLayer { rotationZ = spin.value }) },
                     text = { Text("Surprise me") },
                 )
             }
@@ -334,15 +396,35 @@ fun HomeScreen(state: AppState) {
                     }
                 }
                 itemsIndexed(places, key = { _, p -> p.key }) { i, p ->
-                    PlaceRow(p, p.key in state.favorites, isNew = p.deals.any { state.isNew(it.promo.id) }) { state.open(p) }
-                    if (i < places.lastIndex) {
-                        HorizontalDivider(Modifier.padding(start = 68.dp, end = 16.dp),
-                            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+                    // animateItem: rows slide into place when filters or the location change.
+                    Column(Modifier.animateItem().intro(i, state)) {
+                        PlaceRow(p, p.key in state.favorites, isNew = p.deals.any { state.isNew(it.promo.id) }) { state.open(p) }
+                        if (i < places.lastIndex) {
+                            HorizontalDivider(Modifier.padding(start = 68.dp, end = 16.dp),
+                                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+                        }
                     }
                 }
                 item { SourcesFooter(state) }
             }
         }
+    }
+}
+
+/** On the first showing of the list, rows ease up and fade in one after another. */
+@Composable
+private fun Modifier.intro(index: Int, state: AppState): Modifier {
+    val play = !state.listIntroDone && index < 14
+    val progress = remember { Animatable(if (play) 0f else 1f) }
+    LaunchedEffect(Unit) {
+        if (play) {
+            delay(45L * index)
+            progress.animateTo(1f, tween(450, easing = FastOutSlowInEasing))
+        }
+    }
+    return graphicsLayer {
+        alpha = progress.value
+        translationY = (1f - progress.value) * 36.dp.toPx()
     }
 }
 
@@ -421,17 +503,24 @@ private fun PlaceRow(place: Place, favorite: Boolean, isNew: Boolean, onClick: (
             withStyle(SpanStyle(color = warn, fontWeight = FontWeight.SemiBold)) { append(endsText(p)!!) }
         }
     }
+    // Rows dip slightly while pressed.
+    val press = remember { MutableInteractionSource() }
+    val pressed by press.collectIsPressedAsState()
+    val scale by animateFloatAsState(if (pressed) 0.97f else 1f, spring(stiffness = Spring.StiffnessMediumLow), label = "press")
     Row(
-        Modifier.fillMaxWidth().clickable(onClick = onClick).padding(horizontal = 16.dp, vertical = 12.dp),
+        Modifier.fillMaxWidth()
+            .graphicsLayer { scaleX = scale; scaleY = scale }
+            .clickable(interactionSource = press, indication = LocalIndication.current, onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        PlaceLogo(place.name, place.image, 40.dp)
+        PlaceLogo(place.name, place.image, 40.dp, Modifier.shared("logo-${place.key}"))
         Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    place.name, Modifier.weight(1f, fill = false),
-                    style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold,
+                    place.name, Modifier.weight(1f, fill = false).shared("name-${place.key}"),
+                    style = MaterialTheme.typography.titleMedium,
                     maxLines = 1, overflow = TextOverflow.Ellipsis,
                 )
                 if (favorite) Icon(Icons.Default.Star, "Favorite", Modifier.padding(start = 4.dp).size(16.dp), tint = warn)
@@ -501,10 +590,10 @@ fun DetailScreen(state: AppState) {
         ) {
             item {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    PlaceLogo(place.name, place.image, 84.dp)
+                    PlaceLogo(place.name, place.image, 84.dp, Modifier.shared("logo-${place.key}"))
                     Spacer(Modifier.width(16.dp))
                     Column {
-                        Text(place.name, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
+                        Text(place.name, Modifier.shared("name-${place.key}"), style = MaterialTheme.typography.headlineSmall)
                         Text(
                             "${place.deals.size} deal" + (if (place.deals.size > 1) "s" else "") + " for your cards in ${state.area}",
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -553,8 +642,7 @@ private fun DealPanel(d: Deal, isNew: Boolean, onShare: () -> Unit, onPromoPage:
     Surface(shape = RoundedCornerShape(24.dp), color = MaterialTheme.colorScheme.surfaceContainerHigh) {
         Column(Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(discountLabel(p), style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary, modifier = Modifier.weight(1f))
+                CountUpLabel(discountLabel(p), Modifier.weight(1f))
                 BankLogo(p.bank, 32.dp)
             }
             Text(p.title, style = MaterialTheme.typography.titleMedium)
@@ -582,7 +670,122 @@ private fun DealPanel(d: Deal, isNew: Boolean, onShare: () -> Unit, onPromoPage:
     }
 }
 
+/** "50% OFF" whose number counts up from 0 when the page opens. */
+@Composable
+private fun CountUpLabel(label: String, modifier: Modifier) {
+    val pct = Regex("""(\d+)%""").find(label)?.groupValues?.get(1)?.toIntOrNull()
+    val n = remember(label) { Animatable(0f) }
+    LaunchedEffect(label) {
+        if (pct != null) n.animateTo(pct.toFloat(), tween(900, delayMillis = 200, easing = FastOutSlowInEasing))
+    }
+    Text(
+        if (pct == null) label else label.replace("$pct%", "${n.value.roundToInt()}%"),
+        modifier, style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.primary,
+    )
+}
+
 // ------------------------------------------------------------------------------------------------ Settings
+
+/** Theme (System / Light / Dark) and colour palette. Changing either spreads out in a circle from the tap. */
+@Composable
+private fun AppearanceSection(state: AppState) {
+    val reveal = LocalReveal.current
+    val dark = isDark(state.themeMode)
+    val spin by animateFloatAsState(if (dark) 360f else 0f, tween(700, easing = FastOutSlowInEasing), label = "sun-moon")
+    Surface(shape = RoundedCornerShape(28.dp), color = MaterialTheme.colorScheme.surfaceContainerHigh) {
+        Column(Modifier.fillMaxWidth().padding(18.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                AnimatedContent(
+                    targetState = dark,
+                    transitionSpec = {
+                        (fadeIn(tween(350)) + scaleIn(tween(450), initialScale = 0.3f)) togetherWith
+                            (fadeOut(tween(250)) + scaleOut(tween(300), targetScale = 0.3f))
+                    },
+                    label = "theme-icon",
+                ) { d ->
+                    Icon(
+                        if (d) Icons.Default.DarkMode else Icons.Default.LightMode, null,
+                        Modifier.size(40.dp).graphicsLayer { rotationZ = spin },
+                        tint = MaterialTheme.colorScheme.tertiary,
+                    )
+                }
+                Spacer(Modifier.width(14.dp))
+                Column {
+                    Text("Appearance", style = MaterialTheme.typography.titleLarge)
+                    Text(
+                        when (state.themeMode) {
+                            ThemeMode.System -> "Follows your phone (${if (dark) "dark" else "light"} now)"
+                            ThemeMode.Light -> "Always light"
+                            ThemeMode.Dark -> "Always dark"
+                        },
+                        style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+            Spacer(Modifier.height(16.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                ThemeMode.entries.forEach { m ->
+                    ChoiceTile(
+                        label = m.name,
+                        icon = when (m) {
+                            ThemeMode.System -> Icons.Default.BrightnessAuto
+                            ThemeMode.Light -> Icons.Default.LightMode
+                            ThemeMode.Dark -> Icons.Default.DarkMode
+                        },
+                        selected = state.themeMode == m,
+                        modifier = Modifier.weight(1f),
+                    ) { at -> reveal(at) { state.chooseTheme(m) } }
+                }
+            }
+            Spacer(Modifier.height(18.dp))
+            Text("Colours", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Spacer(Modifier.height(8.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                ChoiceTile("Classic", Icons.Default.Restaurant, state.palette == Palette.Classic, Modifier.weight(1f)) { at ->
+                    reveal(at) { state.choosePalette(Palette.Classic) }
+                }
+                if (Build.VERSION.SDK_INT >= 31) {
+                    ChoiceTile("Material You", Icons.Default.Palette, state.palette == Palette.MaterialYou, Modifier.weight(1f)) { at ->
+                        reveal(at) { state.choosePalette(Palette.MaterialYou) }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/** A selectable tile; reports its own centre so the theme change can grow out of it. */
+@Composable
+private fun ChoiceTile(
+    label: String,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    selected: Boolean,
+    modifier: Modifier,
+    onPick: (Offset) -> Unit,
+) {
+    var center by remember { mutableStateOf(Offset.Zero) }
+    val bg by animateColorAsState(
+        if (selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface, label = "tile-bg")
+    val edge by animateColorAsState(
+        if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant, label = "tile-edge")
+    val lift by animateFloatAsState(if (selected) 1f else 0.96f, spring(dampingRatio = 0.5f), label = "tile-lift")
+    Surface(
+        onClick = { if (!selected) onPick(center) },
+        shape = RoundedCornerShape(20.dp),
+        color = bg,
+        border = BorderStroke(if (selected) 2.dp else 1.dp, edge),
+        modifier = modifier
+            .graphicsLayer { scaleX = lift; scaleY = lift }
+            .onGloballyPositioned { center = it.boundsInRoot().center },
+    ) {
+        Column(Modifier.padding(vertical = 14.dp).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            Icon(icon, null, tint = if (selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant)
+            Spacer(Modifier.height(6.dp))
+            Text(label, style = MaterialTheme.typography.labelLarge,
+                color = if (selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface)
+        }
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -598,7 +801,7 @@ fun SettingsScreen(state: AppState) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("My cards") },
+                title = { Text("Settings", style = MaterialTheme.typography.headlineSmall) },
                 navigationIcon = {
                     if (state.myCards.isNotEmpty())
                         IconButton(onClick = { state.back() }) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back") }
@@ -608,6 +811,10 @@ fun SettingsScreen(state: AppState) {
     ) { pad ->
         LazyColumn(Modifier.fillMaxSize().padding(pad), contentPadding = PaddingValues(16.dp)) {
             item {
+                AppearanceSection(state)
+                Spacer(Modifier.height(28.dp))
+                Text("My cards", style = MaterialTheme.typography.titleLarge)
+                Spacer(Modifier.height(4.dp))
                 Text(
                     if (state.myCards.isEmpty()) "Tick the credit cards you own, or the cards of whoever you eat with. The app only shows promos those cards can use."
                     else "Promos are matched to the cards you tick.",

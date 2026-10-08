@@ -22,6 +22,14 @@ class AppState(app: Application) : AndroidViewModel(app) {
         private set
     var favorites by mutableStateOf(prefs.getStringSet("favorites", emptySet())!!.toSet())
         private set
+    var themeMode by mutableStateOf(
+        runCatching { ThemeMode.valueOf(prefs.getString("theme", "")!!) }.getOrDefault(ThemeMode.System))
+        private set
+    var palette by mutableStateOf(
+        runCatching { Palette.valueOf(prefs.getString("palette", "")!!) }.getOrDefault(Palette.Classic))
+        private set
+    /** The list's rows ease in once per launch, not every time they scroll back into view. */
+    var listIntroDone = false
     var favoritesOnly by mutableStateOf(false)
     var query by mutableStateOf("")
     /** Banks picked in the filter chips; empty means all banks. */
@@ -70,6 +78,16 @@ class AppState(app: Application) : AndroidViewModel(app) {
             lastRefreshOk = fresh != null
             refreshing = false
         }
+    }
+
+    fun chooseTheme(mode: ThemeMode) {
+        themeMode = mode
+        prefs.edit().putString("theme", mode.name).apply()
+    }
+
+    fun choosePalette(p: Palette) {
+        palette = p
+        prefs.edit().putString("palette", p.name).apply()
     }
 
     fun toggleBank(bank: String) {

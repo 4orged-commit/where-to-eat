@@ -2,6 +2,7 @@ package com.wheretoeat
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -35,7 +36,8 @@ private fun bankLogoRes(bank: String): Int? = when (bank.lowercase()) {
 fun BankLogo(bank: String, size: Dp = 20.dp) {
     val res = bankLogoRes(bank)
     Box(
-        Modifier.size(size).clip(RoundedCornerShape(size / 4)).background(Color.White),
+        Modifier.size(size).clip(RoundedCornerShape(size / 4)).background(Color.White)
+            .border(0.5.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(size / 4)),
         contentAlignment = Alignment.Center,
     ) {
         if (res != null) {
@@ -51,31 +53,34 @@ fun BankLogo(bank: String, size: Dp = 20.dp) {
  * Without an image, a letter badge stands in.
  */
 @Composable
-fun PlaceLogo(name: String, image: String?, size: Dp = 60.dp) {
+fun PlaceLogo(name: String, image: String?, size: Dp = 60.dp, modifier: Modifier = Modifier) {
     val shape = RoundedCornerShape(size / 4)
-    val letter = @Composable {
+    // Takes its own modifier: as the image's loading/error placeholder it must not repeat the image's modifier.
+    val letter = @Composable { m: Modifier ->
         Box(
-            Modifier.size(size).clip(shape).background(MaterialTheme.colorScheme.tertiaryContainer),
+            m.size(size).clip(shape).background(MaterialTheme.colorScheme.tertiaryContainer),
             contentAlignment = Alignment.Center,
         ) {
             Text(
                 name.trim().firstOrNull { it.isLetterOrDigit() }?.uppercase() ?: "?",
                 color = MaterialTheme.colorScheme.onTertiaryContainer,
                 fontSize = (size.value * 0.42f).sp,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = Serif,
             )
         }
     }
     if (image == null) {
-        letter()
+        letter(modifier)
         return
     }
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current).data(image).crossfade(true).build(),
         contentDescription = "$name logo",
         contentScale = ContentScale.Fit,
-        modifier = Modifier.size(size).clip(shape).background(Color.White),
-        loading = { letter() },
-        error = { letter() },
+        modifier = modifier.size(size).clip(shape).background(Color.White)
+            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, shape), // keeps white tiles visible on ivory
+        loading = { letter(Modifier) },
+        error = { letter(Modifier) },
     )
 }
