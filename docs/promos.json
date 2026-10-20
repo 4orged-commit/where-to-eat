@@ -1,9 +1,9 @@
 {
- "updated": "2026-10-19T22:18:33+00:00",
+ "updated": "2026-10-20T22:18:27+00:00",
  "banks": {
   "Metrobank": {
    "status": "ok",
-   "updated": "2026-10-19T22:18:33+00:00",
+   "updated": "2026-10-20T22:18:27+00:00",
    "count": 34
   },
   "BDO": {
@@ -292,6 +292,14 @@
      "area": "Alabang",
      "lat": 10.3298043,
      "lon": 123.9053195
+    },
+    {
+     "merchant": "Domino's Pizza",
+     "name": "Tanauan",
+     "address": "HMC Building, Jose P. Laurel Highway corner Blue Mountain St., Poblacion VII, Tanauan City, Batangas",
+     "area": "BGC",
+     "lat": 14.5656805,
+     "lon": 121.0320766
     },
     {
      "merchant": "Domino's Pizza",
