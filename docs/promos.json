@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-21T22:17:51+00:00",
+ "updated": "2026-10-22T22:18:42+00:00",
  "banks": {
   "Metrobank": {
    "status": "ok",
-   "updated": "2026-10-21T22:17:51+00:00",
-   "count": 34
+   "updated": "2026-10-22T22:18:42+00:00",
+   "count": 33
   },
   "BDO": {
    "status": "manual",
@@ -49,6 +49,47 @@
   ]
  },
  "promos": [
+  {
+   "id": "metrobank:StklxMrjS22rw0CM-ZSMMg",
+   "bank": "Metrobank",
+   "title": "20% OFF at Carlo's & Izakaya Geronimo",
+   "description": "Enjoy this offer on your total bill.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-09-01T00:00:00+08:00",
+   "end": "2026-12-31T00:00:00+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-at-carlos-and-izakaya-geronimo",
+   "image": "https://web-assets.metrobank.com.ph/1788226603-mdd-thumbnail-carlos-izakaya.webp?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "branches": [
+    {
+     "merchant": "Carlo's",
+     "name": "Carlo's",
+     "address": "G/F Asian Century Center, 27th St. BGC, Taguig",
+     "area": "BGC",
+     "lat": 14.5506313,
+     "lon": 121.0463984
+    },
+    {
+     "merchant": "Izakaya Geronimo",
+     "name": "Izakaya Geronimo",
+     "address": "G/F Asian Century Center, 27th St. BGC, Taguig",
+     "area": "BGC",
+     "lat": 14.5506313,
+     "lon": 121.0463984
+    }
+   ]
+  },
   {
    "id": "metrobank:RvNdNpuQSSaFU0OoLv2Cog",
    "bank": "Metrobank",
@@ -748,66 +789,6 @@
      "merchant": "Grand Hyatt Manila restaurants",
      "name": "",
      "address": "8th Avenue corner 35th Street, Bonifacio Global City, Taguig City, Manila, 1635",
-     "area": "BGC",
-     "lat": null,
-     "lon": null
-    }
-   ]
-  },
-  {
-   "id": "metrobank:cGO1-uKMRh6s0dPz9dVLMA",
-   "bank": "Metrobank",
-   "title": "50% OFF at Bistro Group restaurants",
-   "description": "Enjoy this offer with your Metrobank Visa credit card.",
-   "cards": [
-    "Cashback Visa",
-    "Femme Signature Visa",
-    "Rewards Plus Visa",
-    "Travel Platinum Visa",
-    "Travel Signature Visa"
-   ],
-   "start": "2026-10-01T00:00:00+08:00",
-   "end": "2026-11-26T23:59:59+08:00",
-   "url": "https://www.metrobank.com.ph/promos/discounts-at-bistro-group-restaurants",
-   "image": "https://web-assets.metrobank.com.ph/1790214471-thumbnail-bistro-premium.webp?auto=format&fm=png&w=320",
-   "branches": [
-    {
-     "merchant": "Morton’s The Steakhouse",
-     "name": "Morton’s The Steakhouse",
-     "address": "11th Avenue corner 36th Street, Uptown Eastgate, Bonifacio Global City, Taguig City",
-     "area": "BGC",
-     "lat": null,
-     "lon": null
-    }
-   ]
-  },
-  {
-   "id": "metrobank:StklxMrjS22rw0CM-ZSMMg",
-   "bank": "Metrobank",
-   "title": "20% OFF at Carlo's & Izakaya Geronimo",
-   "description": "Enjoy this offer on your total bill.",
-   "cards": [
-    "Cashback Visa",
-    "Femme Signature Visa",
-    "M Free Mastercard",
-    "PSBank Credit Mastercard",
-    "Platinum Mastercard",
-    "Rewards Plus Visa",
-    "Titanium Mastercard",
-    "Toyota Mastercard",
-    "Travel Platinum Visa",
-    "Travel Signature Visa",
-    "World Mastercard"
-   ],
-   "start": "2026-09-01T00:00:00+08:00",
-   "end": "2026-12-31T00:00:00+08:00",
-   "url": "https://www.metrobank.com.ph/promos/discounts-at-carlos-and-izakaya-geronimo",
-   "image": "https://web-assets.metrobank.com.ph/1788226603-mdd-thumbnail-carlos-izakaya.webp?rect=552,26,592,592&auto=format&fm=png&w=256",
-   "branches": [
-    {
-     "merchant": "Carlo's & Izakaya Geronimo",
-     "name": "",
-     "address": "Izakaya Geronimo and Carlo’s at G/F Asian Century Center, 27th St. BGC, Taguig",
      "area": "BGC",
      "lat": null,
      "lon": null
