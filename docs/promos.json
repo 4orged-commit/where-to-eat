@@ -1,9 +1,9 @@
 {
- "updated": "2026-10-22T22:18:42+00:00",
+ "updated": "2026-10-23T22:18:53+00:00",
  "banks": {
   "Metrobank": {
    "status": "ok",
-   "updated": "2026-10-22T22:18:42+00:00",
+   "updated": "2026-10-23T22:18:53+00:00",
    "count": 33
   },
   "BDO": {
@@ -454,8 +454,8 @@
      "name": "Zhen Bao  BGC",
      "address": "3/F One Bonifacio High Street, 28th St. Corner 5th Avenue, BGC, Taguig City",
      "area": "BGC",
-     "lat": 14.5511735,
-     "lon": 121.0469302
+     "lat": 14.5507296,
+     "lon": 121.0503969
     }
    ]
   },
