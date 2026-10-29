@@ -1,9 +1,9 @@
 {
- "updated": "2026-10-28T22:27:07+00:00",
+ "updated": "2026-10-29T22:27:56+00:00",
  "banks": {
   "Metrobank": {
    "status": "ok",
-   "updated": "2026-10-28T22:27:07+00:00",
+   "updated": "2026-10-29T22:27:56+00:00",
    "count": 33
   },
   "BDO": {
@@ -315,8 +315,8 @@
      "name": "Alabang-Zapote",
      "address": "G/F Sycamore Center, Alabang-Zapote Road, Muntinlupa City",
      "area": "Alabang",
-     "lat": 14.4234586,
-     "lon": 121.0346381
+     "lat": 14.427995,
+     "lon": 121.0227285
     },
     {
      "merchant": "Domino's Pizza",
