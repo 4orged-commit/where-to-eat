@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-29T22:27:56+00:00",
+ "updated": "2026-10-30T22:24:19+00:00",
  "banks": {
   "Metrobank": {
    "status": "ok",
-   "updated": "2026-10-29T22:27:56+00:00",
-   "count": 33
+   "updated": "2026-10-30T22:24:19+00:00",
+   "count": 30
   },
   "BDO": {
    "status": "manual",
@@ -49,6 +49,39 @@
   ]
  },
  "promos": [
+  {
+   "id": "metrobank:NNvlFDkRRyCum23XOyK2Lg",
+   "bank": "Metrobank",
+   "title": "30% OFF at Bo's Coffee",
+   "description": "Enjoy this for a minimum spend of PHP 1,500 with Metrobank credit card.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-10-01T00:00:00+08:00",
+   "end": "2026-12-31T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-at-bos-coffee",
+   "image": "https://web-assets.metrobank.com.ph/1774927593-mdd-thumbnail-bos.jpg?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "branches": [
+    {
+     "merchant": "Bo's Coffee",
+     "name": "Bo's Coffee Cyberzone",
+     "address": "Filinvest Cebu, Cyberzone Cebu City, Salinas Drive, Lahug, Cebu",
+     "area": "Alabang",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
   {
    "id": "metrobank:StklxMrjS22rw0CM-ZSMMg",
    "bank": "Metrobank",
@@ -120,38 +153,6 @@
      "area": "BGC",
      "lat": 14.5488304,
      "lon": 121.0503067
-    }
-   ]
-  },
-  {
-   "id": "metrobank:FtzAlPsSQw6t5zjvSalejA",
-   "bank": "Metrobank",
-   "title": "50% OFF at Eataewon",
-   "description": "Get this deal for a minimum spend of PHP 2,500 from Monday to Friday.",
-   "cards": [
-    "Cashback Visa",
-    "Femme Signature Visa",
-    "M Free Mastercard",
-    "Platinum Mastercard",
-    "Rewards Plus Visa",
-    "Titanium Mastercard",
-    "Toyota Mastercard",
-    "Travel Platinum Visa",
-    "Travel Signature Visa",
-    "World Mastercard"
-   ],
-   "start": "2026-08-01T00:00:00+08:00",
-   "end": "2026-10-31T00:00:00+08:00",
-   "url": "https://www.metrobank.com.ph/promos/fifty-percent-off-at-eataewon",
-   "image": "https://web-assets.metrobank.com.ph/1784613423-thumbnail-card-banner-1144-x-644-px-copy.webp?rect=584,42,560,560&auto=format&fm=png&w=256",
-   "branches": [
-    {
-     "merchant": "Eataewon",
-     "name": "Eataewon Festival Mall",
-     "address": "Space No. 2296.2 Corporate Avenue, Filinvest City, Alabang, Muntinlupa City",
-     "area": "Alabang",
-     "lat": 14.4147634,
-     "lon": 121.0387682
     }
    ]
   },
@@ -284,71 +285,6 @@
      "area": "BGC",
      "lat": 14.5458551,
      "lon": 121.0535348
-    }
-   ]
-  },
-  {
-   "id": "metrobank:UaYgtp1yQQqHQnFi9UpKag",
-   "bank": "Metrobank",
-   "title": "50% OFF at Domino's Pizza",
-   "description": "Get this deal on select medium and family-sized pizzas.",
-   "cards": [
-    "Cashback Visa",
-    "Femme Signature Visa",
-    "M Free Mastercard",
-    "PSBank Credit Mastercard",
-    "Platinum Mastercard",
-    "Rewards Plus Visa",
-    "Titanium Mastercard",
-    "Toyota Mastercard",
-    "Travel Platinum Visa",
-    "Travel Signature Visa",
-    "World Mastercard"
-   ],
-   "start": "2026-08-01T00:00:00+08:00",
-   "end": "2026-10-31T00:00:00+08:00",
-   "url": "https://www.metrobank.com.ph/promos/discounts-dominos-pizza",
-   "image": "https://web-assets.metrobank.com.ph/1784688713-thumbnail-card-banner-1144-x-644-px-24-copy.webp?rect=584,42,560,560&auto=format&fm=png&w=256",
-   "branches": [
-    {
-     "merchant": "Domino's Pizza",
-     "name": "Alabang-Zapote",
-     "address": "G/F Sycamore Center, Alabang-Zapote Road, Muntinlupa City",
-     "area": "Alabang",
-     "lat": 14.427995,
-     "lon": 121.0227285
-    },
-    {
-     "merchant": "Domino's Pizza",
-     "name": "BGC",
-     "address": "21st Floor, Ore Central Building, 9th Avenue cor. 31st Street, BGC, Taguig City 1630",
-     "area": "BGC",
-     "lat": 14.5525125,
-     "lon": 121.0511406
-    },
-    {
-     "merchant": "Domino's Pizza",
-     "name": "Cebu IT Park",
-     "address": "Filinvest Cebu Cyberzone Tower 1, Salinas Drive corner W. Geonzon St. Lahug, Cebu City",
-     "area": "Alabang",
-     "lat": 10.3298043,
-     "lon": 123.9053195
-    },
-    {
-     "merchant": "Domino's Pizza",
-     "name": "Tanauan",
-     "address": "HMC Building, Jose P. Laurel Highway corner Blue Mountain St., Poblacion VII, Tanauan City, Batangas",
-     "area": "BGC",
-     "lat": 14.5656805,
-     "lon": 121.0320766
-    },
-    {
-     "merchant": "Domino's Pizza",
-     "name": "Torre Sur",
-     "address": "Torre Sur Condominium, Alabang-Zapote Road, Las Piñas City",
-     "area": "Alabang",
-     "lat": 14.4485568,
-     "lon": 120.9843221
     }
    ]
   },
@@ -772,30 +708,6 @@
    ]
   },
   {
-   "id": "metrobank:d31Ux0mTRhW2wqWBF8_FWA",
-   "bank": "Metrobank",
-   "title": "50% OFF at Grand Hyatt Manila restaurants",
-   "description": "Enjoy this deal with your Metrobank World or Platinum Mastercard credit card.",
-   "cards": [
-    "Platinum Mastercard",
-    "World Mastercard"
-   ],
-   "start": "2026-10-01T00:00:00+08:00",
-   "end": "2026-10-30T23:59:59+08:00",
-   "url": "https://www.metrobank.com.ph/promos/fifty-percent-off-at-grand-hyatt-manila-restaurants",
-   "image": "https://web-assets.metrobank.com.ph/1788318380-thumbnail-grand-hyatt.webp?auto=format&fm=png&w=320",
-   "branches": [
-    {
-     "merchant": "Grand Hyatt Manila restaurants",
-     "name": "",
-     "address": "8th Avenue corner 35th Street, Bonifacio Global City, Taguig City, Manila, 1635",
-     "area": "BGC",
-     "lat": null,
-     "lon": null
-    }
-   ]
-  },
-  {
    "id": "metrobank:aCjp05WYT1upVBfCDzh9uw",
    "bank": "Metrobank",
    "title": "20% OFF at Ono Aloha Kitchen",
@@ -961,39 +873,6 @@
      "merchant": "Hashi Pan-Asian Restaurant",
      "name": "",
      "address": "Hashi Pan-Asian Mckinley Hill",
-     "area": "BGC",
-     "lat": null,
-     "lon": null
-    }
-   ]
-  },
-  {
-   "id": "metrobank:NBHg_J6kRCuzGMoygLXfPw",
-   "bank": "Metrobank",
-   "title": "10% OFF at Pedal Café",
-   "description": "Enjoy this offer for a minimum spend of PHP 500.",
-   "cards": [
-    "Cashback Visa",
-    "Femme Signature Visa",
-    "M Free Mastercard",
-    "PSBank Credit Mastercard",
-    "Platinum Mastercard",
-    "Rewards Plus Visa",
-    "Titanium Mastercard",
-    "Toyota Mastercard",
-    "Travel Platinum Visa",
-    "Travel Signature Visa",
-    "World Mastercard"
-   ],
-   "start": "2026-08-01T00:00:00+08:00",
-   "end": "2026-10-31T00:00:00+08:00",
-   "url": "https://www.metrobank.com.ph/promos/discounts-at-pedal-cafe",
-   "image": "https://web-assets.metrobank.com.ph/1784776110-thumbnail-card-banner-1144-x-644-px-29-copy.webp?rect=584,42,560,560&auto=format&fm=png&w=256",
-   "branches": [
-    {
-     "merchant": "Pedal Café",
-     "name": "",
-     "address": "Pedal Café Uptown — 3rd Floor, Uptown Mall, Taguig City. Tel: 0962 499 3853",
      "area": "BGC",
      "lat": null,
      "lon": null
