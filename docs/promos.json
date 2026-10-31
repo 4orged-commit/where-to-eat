@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-30T22:24:19+00:00",
+ "updated": "2026-10-31T22:22:50+00:00",
  "banks": {
   "Metrobank": {
    "status": "ok",
-   "updated": "2026-10-30T22:24:19+00:00",
-   "count": 30
+   "updated": "2026-10-31T22:22:50+00:00",
+   "count": 27
   },
   "BDO": {
    "status": "manual",
@@ -536,80 +536,6 @@
    ]
   },
   {
-   "id": "metrobank:a6YOpUnQSqeW_5m_6_JirQ",
-   "bank": "Metrobank",
-   "title": "20% OFF at Persia Grill",
-   "description": "Avail of this discount on the total bill for a minimum spend of PHP 2,000.",
-   "cards": [
-    "Cashback Visa",
-    "Femme Signature Visa",
-    "M Free Mastercard",
-    "PSBank Credit Mastercard",
-    "Platinum Mastercard",
-    "Rewards Plus Visa",
-    "Titanium Mastercard",
-    "Toyota Mastercard",
-    "Travel Platinum Visa",
-    "Travel Signature Visa",
-    "World Mastercard"
-   ],
-   "start": "2026-05-01T00:00:00+08:00",
-   "end": "2026-10-31T23:59:59+08:00",
-   "url": "https://www.metrobank.com.ph/promos/twenty-percent-off-at-persia-grill",
-   "image": "https://web-assets.metrobank.com.ph/1776996041-dining-persiagrill-mdd-thumbnail-1144x644.jpg?rect=552,26,592,592&auto=format&fm=png&w=256",
-   "branches": [
-    {
-     "merchant": "Persia Grill",
-     "name": "BGC",
-     "address": "21st Floor, Ore Central Building, 9th Avenue cor. 31st Street, BGC, Taguig City 1630",
-     "area": "BGC",
-     "lat": 14.5525125,
-     "lon": 121.0511406
-    }
-   ]
-  },
-  {
-   "id": "metrobank:Ygip_n9lQCumX1n6hnpHDg",
-   "bank": "Metrobank",
-   "title": "20% OFF at Cork Wine Bar & Shop",
-   "description": "Enjoy this discount on food and wine for a minimum spend of PHP 5,000.",
-   "cards": [
-    "Cashback Visa",
-    "Femme Signature Visa",
-    "M Free Mastercard",
-    "PSBank Credit Mastercard",
-    "Platinum Mastercard",
-    "Rewards Plus Visa",
-    "Titanium Mastercard",
-    "Toyota Mastercard",
-    "Travel Platinum Visa",
-    "Travel Signature Visa",
-    "World Mastercard"
-   ],
-   "start": "2026-05-02T00:00:00+08:00",
-   "end": "2026-10-31T23:59:59+08:00",
-   "url": "https://www.metrobank.com.ph/promos/discounts-at-cork-wine-bar-and-shop",
-   "image": "https://web-assets.metrobank.com.ph/1777267291-dining-cork-mdd-thumbnail-1144x644.jpg?rect=552,26,592,592&auto=format&fm=png&w=256",
-   "branches": [
-    {
-     "merchant": "Cork Wine Bar & Shop",
-     "name": "Cork Wine Bar & Shop BGC",
-     "address": "G/F W 5th Building, 5th Avenue corner 32nd Street, Bonifacio Global City ,Taguig, Metro Manila +63996 945 8888",
-     "area": "BGC",
-     "lat": 14.5542642,
-     "lon": 121.0486693
-    },
-    {
-     "merchant": "Cork Wine Bar & Shop",
-     "name": "Cork Wine Bar & Shop Elite BGC Roof Deck Floor",
-     "address": "Roof Deck Floor, The W Fifth Avenue,32nd Street 5th Ave, Bonifacio Global City, Taguig, Metro Manila +63966 896 8888",
-     "area": "BGC",
-     "lat": 14.5532158,
-     "lon": 121.049037
-    }
-   ]
-  },
-  {
    "id": "metrobank:YITNmhX0R_eTLt1XWW1cEA",
    "bank": "Metrobank",
    "title": "Up to 30% OFF at B Hotel Alabang",
@@ -906,39 +832,6 @@
      "merchant": "Moshi Koshi Noodle Boss",
      "name": "",
      "address": "Moshi Koshi Noodle Boss, 2nd Level Main Mall, Market! Market!, BGC, Taguig",
-     "area": "BGC",
-     "lat": null,
-     "lon": null
-    }
-   ]
-  },
-  {
-   "id": "metrobank:Q6sV5ANHRUGDYvZOHemaDQ",
-   "bank": "Metrobank",
-   "title": "10% OFF at The Pearl Room",
-   "description": "Score this discount on your food bill.",
-   "cards": [
-    "Cashback Visa",
-    "Femme Signature Visa",
-    "M Free Mastercard",
-    "PSBank Credit Mastercard",
-    "Platinum Mastercard",
-    "Rewards Plus Visa",
-    "Titanium Mastercard",
-    "Toyota Mastercard",
-    "Travel Platinum Visa",
-    "Travel Signature Visa",
-    "World Mastercard"
-   ],
-   "start": "2026-05-01T00:00:00+08:00",
-   "end": "2026-10-31T23:59:59+08:00",
-   "url": "https://www.metrobank.com.ph/promos/discounts-at-the-pearl-room",
-   "image": "https://web-assets.metrobank.com.ph/1777000624-dining-pearlroom-mdd-thumbnail-1144x644.jpg?rect=552,26,592,592&auto=format&fm=png&w=256",
-   "branches": [
-    {
-     "merchant": "The Pearl Room",
-     "name": "The Pearl Room BGC",
-     "address": "Verve Residences, Tower 2, Bonifacio Global City, Taguig City",
      "area": "BGC",
      "lat": null,
      "lon": null
