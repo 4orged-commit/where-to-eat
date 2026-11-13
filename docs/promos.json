@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-12T02:37:37+00:00",
+ "updated": "2026-11-13T02:17:51+00:00",
  "banks": {
   "Metrobank": {
    "status": "ok",
-   "updated": "2026-11-12T02:37:37+00:00",
-   "count": 30
+   "updated": "2026-11-13T02:17:51+00:00",
+   "count": 29
   },
   "BDO": {
    "status": "manual",
@@ -49,138 +49,6 @@
   ]
  },
  "promos": [
-  {
-   "id": "metrobank:c09bZTSuRVu6McXUzxWRnA",
-   "bank": "Metrobank",
-   "title": "20% OFF at Brunch Bureau",
-   "description": "Score this deal for a minimum spend of PHP 3,000.",
-   "cards": [
-    "Cashback Visa",
-    "Femme Signature Visa",
-    "M Free Mastercard",
-    "PSBank Credit Mastercard",
-    "Platinum Mastercard",
-    "Rewards Plus Visa",
-    "Titanium Mastercard",
-    "Toyota Mastercard",
-    "Travel Platinum Visa",
-    "Travel Signature Visa",
-    "World Mastercard"
-   ],
-   "start": "2026-10-01T00:00:00+08:00",
-   "end": "2027-03-31T23:59:59+08:00",
-   "url": "https://www.metrobank.com.ph/promos/discounts-at-brunch-bureau",
-   "image": "https://web-assets.metrobank.com.ph/1793675330-thumbnail-card-banner-1144-x-644-px-8.jpg?rect=584,42,560,560&auto=format&fm=png&w=256",
-   "branches": [
-    {
-     "merchant": "Brunch Bureau",
-     "name": "Molito",
-     "address": "Unit 25, Building 8, Molito Lifestyle Center, Alabang, Muntinlupa, Metro Manila",
-     "area": "Alabang",
-     "lat": null,
-     "lon": null
-    }
-   ]
-  },
-  {
-   "id": "metrobank:aBClhPOIRGWYkLM7mIsJHA",
-   "bank": "Metrobank",
-   "title": "20% OFF at The Black Pig",
-   "description": "Avail this on a la carte menu for a minimum spend of HP PHP 1,000.",
-   "cards": [
-    "Cashback Visa",
-    "Femme Signature Visa",
-    "M Free Mastercard",
-    "PSBank Credit Mastercard",
-    "Platinum Mastercard",
-    "Rewards Plus Visa",
-    "Titanium Mastercard",
-    "Toyota Mastercard",
-    "Travel Platinum Visa",
-    "Travel Signature Visa",
-    "World Mastercard"
-   ],
-   "start": "2026-10-01T00:00:00+08:00",
-   "end": "2026-12-31T23:59:59+08:00",
-   "url": "https://www.metrobank.com.ph/promos/discounts-at-the-black-pig",
-   "image": "https://web-assets.metrobank.com.ph/1793674394-thumbnail-card-banner-1144-x-644-px-2.jpg?rect=584,42,560,560&auto=format&fm=png&w=256",
-   "branches": [
-    {
-     "merchant": "The Black Pig",
-     "name": "",
-     "address": "The promo can be availed at The Black Pig, 2/F Commercecenter Bldg., East Asia Drive, Alabang, Muntinlupa City",
-     "area": "Alabang",
-     "lat": null,
-     "lon": null
-    }
-   ]
-  },
-  {
-   "id": "metrobank:U1D616y1SIie1H-PUME0HQ",
-   "bank": "Metrobank",
-   "title": "15% OFF at The Perfect Pint",
-   "description": "Score this deal for a minimum spend of PHP 3,000.",
-   "cards": [
-    "Cashback Visa",
-    "Femme Signature Visa",
-    "M Free Mastercard",
-    "PSBank Credit Mastercard",
-    "Platinum Mastercard",
-    "Rewards Plus Visa",
-    "Titanium Mastercard",
-    "Toyota Mastercard",
-    "Travel Platinum Visa",
-    "Travel Signature Visa",
-    "World Mastercard"
-   ],
-   "start": "2026-10-01T00:00:00+08:00",
-   "end": "2027-03-31T23:59:59+08:00",
-   "url": "https://www.metrobank.com.ph/promos/discounts-at-the-perfect-pint",
-   "image": "https://web-assets.metrobank.com.ph/1793673176-thumbnail-card-banner-1144-x-644-px-23.jpg?rect=584,42,560,560&auto=format&fm=png&w=256",
-   "branches": [
-    {
-     "merchant": "The Perfect Pint",
-     "name": "",
-     "address": "The Perfect Pint Molito Alabang -Molito Lifestyle Building, Madrigal Avenue, Madrigal Alabang, Muntinlupa City, Metro Manila",
-     "area": "Alabang",
-     "lat": null,
-     "lon": null
-    }
-   ]
-  },
-  {
-   "id": "metrobank:NNvlFDkRRyCum23XOyK2Lg",
-   "bank": "Metrobank",
-   "title": "30% OFF at Bo's Coffee",
-   "description": "Enjoy this for a minimum spend of PHP 1,500 with Metrobank credit card.",
-   "cards": [
-    "Cashback Visa",
-    "Femme Signature Visa",
-    "M Free Mastercard",
-    "PSBank Credit Mastercard",
-    "Platinum Mastercard",
-    "Rewards Plus Visa",
-    "Titanium Mastercard",
-    "Toyota Mastercard",
-    "Travel Platinum Visa",
-    "Travel Signature Visa",
-    "World Mastercard"
-   ],
-   "start": "2026-10-01T00:00:00+08:00",
-   "end": "2026-12-31T23:59:59+08:00",
-   "url": "https://www.metrobank.com.ph/promos/discounts-at-bos-coffee",
-   "image": "https://web-assets.metrobank.com.ph/1774927593-mdd-thumbnail-bos.jpg?rect=552,26,592,592&auto=format&fm=png&w=256",
-   "branches": [
-    {
-     "merchant": "Bo's Coffee",
-     "name": "Bo's Coffee Cyberzone",
-     "address": "Filinvest Cebu, Cyberzone Cebu City, Salinas Drive, Lahug, Cebu",
-     "area": "Alabang",
-     "lat": null,
-     "lon": null
-    }
-   ]
-  },
   {
    "id": "metrobank:StklxMrjS22rw0CM-ZSMMg",
    "bank": "Metrobank",
@@ -285,39 +153,6 @@
      "area": "BGC",
      "lat": 14.5341112,
      "lon": 121.0517966
-    }
-   ]
-  },
-  {
-   "id": "metrobank:ctRq74xBQxW8Tf3I_VaV3A",
-   "bank": "Metrobank",
-   "title": "10% OFF + FREE Dish at Pad Thai Express",
-   "description": "Get this deal for a minimum spend of PHP 1,900.",
-   "cards": [
-    "Cashback Visa",
-    "Femme Signature Visa",
-    "M Free Mastercard",
-    "PSBank Credit Mastercard",
-    "Platinum Mastercard",
-    "Rewards Plus Visa",
-    "Titanium Mastercard",
-    "Toyota Mastercard",
-    "Travel Platinum Visa",
-    "Travel Signature Visa",
-    "World Mastercard"
-   ],
-   "start": "2026-08-01T00:00:00+08:00",
-   "end": "2026-12-30T00:00:00+08:00",
-   "url": "https://www.metrobank.com.ph/promos/discounts-at-pad-thai-express",
-   "image": "https://web-assets.metrobank.com.ph/1784773969-thumbnail-card-banner-1144-x-644-px-28-copy.webp?rect=584,42,560,560&auto=format&fm=png&w=256",
-   "branches": [
-    {
-     "merchant": "Pad Thai Express",
-     "name": "Pad Thai Express - Las Pinas City",
-     "address": "UNIT 4B PILAR VILLAGE, ALMANZA UNO, LAS PINAS CITY.",
-     "area": "Alabang",
-     "lat": 14.4229057,
-     "lon": 121.0113765
     }
    ]
   },
@@ -729,6 +564,138 @@
      "area": "Alabang",
      "lat": 14.4240678,
      "lon": 121.0396531
+    }
+   ]
+  },
+  {
+   "id": "metrobank:c09bZTSuRVu6McXUzxWRnA",
+   "bank": "Metrobank",
+   "title": "20% OFF at Brunch Bureau",
+   "description": "Score this deal for a minimum spend of PHP 3,000.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-10-01T00:00:00+08:00",
+   "end": "2027-03-31T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-at-brunch-bureau",
+   "image": "https://web-assets.metrobank.com.ph/1793675330-thumbnail-card-banner-1144-x-644-px-8.jpg?rect=584,42,560,560&auto=format&fm=png&w=256",
+   "branches": [
+    {
+     "merchant": "Brunch Bureau",
+     "name": "Molito",
+     "address": "Unit 25, Building 8, Molito Lifestyle Center, Alabang, Muntinlupa, Metro Manila",
+     "area": "Alabang",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:aBClhPOIRGWYkLM7mIsJHA",
+   "bank": "Metrobank",
+   "title": "20% OFF at The Black Pig",
+   "description": "Avail this on a la carte menu for a minimum spend of HP PHP 1,000.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-10-01T00:00:00+08:00",
+   "end": "2026-12-31T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-at-the-black-pig",
+   "image": "https://web-assets.metrobank.com.ph/1793674394-thumbnail-card-banner-1144-x-644-px-2.jpg?rect=584,42,560,560&auto=format&fm=png&w=256",
+   "branches": [
+    {
+     "merchant": "The Black Pig",
+     "name": "",
+     "address": "The promo can be availed at The Black Pig, 2/F Commercecenter Bldg., East Asia Drive, Alabang, Muntinlupa City",
+     "area": "Alabang",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:U1D616y1SIie1H-PUME0HQ",
+   "bank": "Metrobank",
+   "title": "15% OFF at The Perfect Pint",
+   "description": "Score this deal for a minimum spend of PHP 3,000.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-10-01T00:00:00+08:00",
+   "end": "2027-03-31T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-at-the-perfect-pint",
+   "image": "https://web-assets.metrobank.com.ph/1793673176-thumbnail-card-banner-1144-x-644-px-23.jpg?rect=584,42,560,560&auto=format&fm=png&w=256",
+   "branches": [
+    {
+     "merchant": "The Perfect Pint",
+     "name": "",
+     "address": "The Perfect Pint Molito Alabang -Molito Lifestyle Building, Madrigal Avenue, Madrigal Alabang, Muntinlupa City, Metro Manila",
+     "area": "Alabang",
+     "lat": null,
+     "lon": null
+    }
+   ]
+  },
+  {
+   "id": "metrobank:NNvlFDkRRyCum23XOyK2Lg",
+   "bank": "Metrobank",
+   "title": "30% OFF at Bo's Coffee",
+   "description": "Enjoy this for a minimum spend of PHP 1,500 with Metrobank credit card.",
+   "cards": [
+    "Cashback Visa",
+    "Femme Signature Visa",
+    "M Free Mastercard",
+    "PSBank Credit Mastercard",
+    "Platinum Mastercard",
+    "Rewards Plus Visa",
+    "Titanium Mastercard",
+    "Toyota Mastercard",
+    "Travel Platinum Visa",
+    "Travel Signature Visa",
+    "World Mastercard"
+   ],
+   "start": "2026-10-01T00:00:00+08:00",
+   "end": "2026-12-31T23:59:59+08:00",
+   "url": "https://www.metrobank.com.ph/promos/discounts-at-bos-coffee",
+   "image": "https://web-assets.metrobank.com.ph/1774927593-mdd-thumbnail-bos.jpg?rect=552,26,592,592&auto=format&fm=png&w=256",
+   "branches": [
+    {
+     "merchant": "Bo's Coffee",
+     "name": "Bo's Coffee Cyberzone",
+     "address": "Filinvest Cebu, Cyberzone Cebu City, Salinas Drive, Lahug, Cebu",
+     "area": "Alabang",
+     "lat": null,
+     "lon": null
     }
    ]
   },
